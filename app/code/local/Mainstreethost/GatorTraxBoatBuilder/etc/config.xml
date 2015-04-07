@@ -36,6 +36,17 @@
                 <class>Mainstreethost_GatorTraxBoatBuilder_Helper</class>
             </gator>
         </helpers>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <Mainstreethost_gatortraxboatbuilder_model_observer>
+                        <type>model</type>
+                        <class>Mainstreethost_GatorTraxBoatBuilder_Model_Observer</class>
+                        <method>getGatorProducts</method>
+                    </Mainstreethost_gatortraxboatbuilder_model_observer>
+                </observers>
+            </controller_action_predispatch>
+        </events>
     </global>
     <adminhtml>
         <acl>
