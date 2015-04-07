@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mainstreethost_GatorTraxBoatBuilder>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Mainstreethost_GatorTraxBoatBuilder>
+    </modules>
+</config>
