@@ -44,9 +44,9 @@
 <!--                    <username><![CDATA[miworklc_allpeca]]></username>
                     <password><![CDATA[201309051145]]></password>
                     <dbname><![CDATA[miworklc_allpecans2]]></dbname>-->
-                    <username><![CDATA[gatortr2_gator]]></username>
-                    <password><![CDATA[WrKw5PS&n]]></password>
-                    <dbname><![CDATA[gatortr2_bfmarinegatortrax]]></dbname>
+                    <username><![CDATA[root]]></username>
+                    <password><![CDATA[uN36htdv]]></password>
+                    <dbname><![CDATA[gatortrax]]></dbname>
                     <port><![CDATA[3307]]></port>
                     <active>1</active>
                 </connection>

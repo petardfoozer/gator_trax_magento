@@ -14,7 +14,7 @@
                     <initStatements>SET NAMES utf8</initStatements>
                     <type>pdo_mysql</type>
                     
-                <host><![CDATA[localhost]]></host><username><![CDATA[gatortr2_gator]]></username><password><![CDATA[WrKw5PS&n]]></password><dbname><![CDATA[gatortr2_bfmarinegatortrax]]></dbname><port><![CDATA[3307]]></port><active>1</active></connection>
+                <host><![CDATA[localhost]]></host><username><![CDATA[root]]></username><password><![CDATA[uN36htdv]]></password><dbname><![CDATA[gatortrax]]></dbname><port><![CDATA[3307]]></port><active>1</active></connection>
             </default_setup>
             <default_write>
                 <connection>
@@ -1734,7 +1734,12 @@
                 <class>Inchoo_FeaturedProducts_Model</class>
             </featuredproducts><moneybookers>
                 <class>Phoenix_Moneybookers_Model</class>
-            </moneybookers></models>
+            </moneybookers><gator>
+                <class>Mainstreethost_GatorTraxBoatBuilder_Model</class>
+                <resourceModel>gator_resource</resourceModel>
+            </gator><gator_resource>
+                <class>Mainstreethost_GatorTraxBoatBuilder_Model_Resource</class>
+            </gator_resource></models>
     <blocks>
             <connect>
                 <class>Mage_Connect_Block</class>
@@ -1821,7 +1826,9 @@
                 <class>Inchoo_UrlRewriteImporter_Block</class>
             </inchoo_urlrewriteimporter><featuredproducts>
                 <class>Inchoo_FeaturedProducts_Block</class>
-            </featuredproducts><moneybookers><class>Phoenix_Moneybookers_Block</class></moneybookers></blocks><helpers>
+            </featuredproducts><moneybookers><class>Phoenix_Moneybookers_Block</class></moneybookers><gator>
+                <class>Mainstreethost_GatorTraxBoatBuilder_Block</class>
+            </gator></blocks><helpers>
             <core>
                 <encryption_model>Mage_Core_Model_Encryption</encryption_model>
             </core>
@@ -1865,7 +1872,9 @@
                 <class>Inchoo_FeaturedProducts_Helper</class>
             </featuredproducts><moneybookers>
                 <class>Phoenix_Moneybookers_Helper</class>
-            </moneybookers></helpers><template>
+            </moneybookers><gator>
+                <class>Mainstreethost_GatorTraxBoatBuilder_Helper</class>
+            </gator></helpers><template>
             <email><admin_emails_forgot_email_template translate="label" module="adminhtml">
                     <label>Forgot Admin Password</label>
                     <file>admin_password_reset_confirmation.html</file>
@@ -6163,7 +6172,9 @@ T: {{var telephone}}
             <version>2.0.1</version>
         </Inchoo_FeaturedProducts><Phoenix_Moneybookers>
             <version>1.6.0.0</version>
-        </Phoenix_Moneybookers></modules><admin>
+        </Phoenix_Moneybookers><Mainstreethost_GatorTraxBoatBuilder>
+            <version>0.1.0</version>
+        </Mainstreethost_GatorTraxBoatBuilder></modules><admin>
         <routers>
             <adminhtml>
                 <args>
@@ -7303,7 +7314,9 @@ T: {{var telephone}}
                                         </inchoo_general>
                                     <moneybookers translate="title" module="moneybookers">
                                             <title>Moneybookers Settings</title>
-                                        </moneybookers></children>
+                                        </moneybookers><boatbuildersettings>
+                                            <title>Boat Builder Settings</title>
+                                        </boatbuildersettings></children>
                                 </config>
                             </children>
                         </system>
@@ -7517,7 +7530,13 @@ T: {{var telephone}}
                     <module>Phoenix_Moneybookers</module>
                     <frontName>moneybookers</frontName>
                 </args>
-            </moneybookers></routers>
+            </moneybookers><boatbuilder>
+                <use>standard</use>
+                <args>
+                    <module>Mainstreethost_GatorTraxBoatBuilder</module>
+                    <frontName>boatbuilder</frontName>
+                </args>
+            </boatbuilder></routers>
         <translate>
             <modules>
                 <Mage_Core>

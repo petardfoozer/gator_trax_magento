@@ -5,6 +5,17 @@
             <version>0.1.0</version>
         </Mainstreethost_GatorTraxBoatBuilder>
     </modules>
+    <frontend>
+        <routers>
+            <boatbuilder>
+                <use>standard</use>
+                <args>
+                    <module>Mainstreethost_GatorTraxBoatBuilder</module>
+                    <frontName>boatbuilder</frontName>
+                </args>
+            </boatbuilder>
+        </routers>
+    </frontend>
     <global>
         <models>
             <gator>
@@ -26,4 +37,25 @@
             </gator>
         </helpers>
     </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <boatbuildersettings>
+                                            <title>Boat Builder Settings</title>
+                                        </boatbuildersettings>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
 </config>
