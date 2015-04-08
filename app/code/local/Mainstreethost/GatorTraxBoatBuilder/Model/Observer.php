@@ -44,10 +44,6 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Observer
 
     public function getCustomerCart()
     {
-
-        //THIS IS PLACE HOLDER DATA, WILL NEED TO PUSH WHAT YANNICK SENDS TO ME INTO THE CART
-
-
         $session = Mage::getSingleton('checkout/session');
         $session->getQuote()->delete();
         $session->clear();
@@ -66,6 +62,9 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Observer
 
     public function addProductToCart()
     {
+
+
+        //THIS IS PLACE HOLDER DATA, WILL NEED TO PUSH WHAT YANNICK SENDS TO ME INTO THE CART
         $product_model = Mage::getSingleton('catalog/product');
         $sku = "BOAT-MODEL-GEN-II";
         $product_id = $product_model->getIdBySku($sku);
