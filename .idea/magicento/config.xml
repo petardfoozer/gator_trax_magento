@@ -14,7 +14,7 @@
                     <initStatements>SET NAMES utf8</initStatements>
                     <type>pdo_mysql</type>
                     
-                <host><![CDATA[localhost]]></host><username><![CDATA[root]]></username><password><![CDATA[uN36htdv]]></password><dbname><![CDATA[gatortrax]]></dbname><port><![CDATA[3307]]></port><active>1</active></connection>
+                <host><![CDATA[localhost]]></host><username><![CDATA[root]]></username><password><![CDATA[K76kRN34]]></password><dbname><![CDATA[gator_trax_magento]]></dbname><port><![CDATA[3307]]></port><active>1</active></connection>
             </default_setup>
             <default_write>
                 <connection>
@@ -2091,7 +2091,11 @@
                 <xmlconnect>
                         <class>xmlconnect/observer</class>
                         <method>actionFrontPreDispatchXmlAdmin</method>
-                    </xmlconnect></observers>
+                    </xmlconnect><Mainstreethost_gatortraxboatbuilder_model_observer>
+                        <type>model</type>
+                        <class>Mainstreethost_GatorTraxBoatBuilder_Model_Observer</class>
+                        <method>getGatorProducts</method>
+                    </Mainstreethost_gatortraxboatbuilder_model_observer></observers>
             </controller_action_predispatch>
         <controller_front_init_routers>
                 <observers>
