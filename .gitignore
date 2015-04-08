@@ -125,4 +125,4 @@ skin/frontend/enterprise
 skin/install/
 var/
 .idea/
-/test.php
+test.php
