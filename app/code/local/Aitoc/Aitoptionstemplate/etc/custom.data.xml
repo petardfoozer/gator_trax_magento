@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <template>
+        <adminhtml>
+            <file path="design--adminhtml--default--default--template--catalog--product--edit--options--option"></file>
+            <file path="design--adminhtml--default--default--template--catalog--product--edit--options"></file>
+        </adminhtml>
+        
+    </template>
+    
+</config>
+<!--
+/**
+ * Custom Options Templates
+ *
+ * @category:    Aitoc
+ * @package:     Aitoc_Aitoptionstemplate
+ * @version      3.2.9
+ * @license:     iMG8ryrQYpy7f1WPNeYUzChWzfnzPomRnwOzOdn2KA
+ * @copyright:   Copyright (c) 2014 AITOC, Inc. (http://www.aitoc.com)
+ */
+-->
