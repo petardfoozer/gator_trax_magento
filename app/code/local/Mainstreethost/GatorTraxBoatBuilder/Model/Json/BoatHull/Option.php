@@ -6,11 +6,11 @@
  * Time: 8:12 AM
  */
 
-abstract class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Option implements JsonSerializable
+abstract class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Option extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
 {
-    protected $name;
-    protected $id;
-    protected $required;
+    private $name;
+    private $id;
+    private $required;
 
     function __construct()
     {
@@ -27,13 +27,8 @@ abstract class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Option im
         return $this->jsonSerialize();
     }
 
-
-    public function jsonSerialize()
+    public function get($member)
     {
-        return [
-            'name' => $this->name,
-            'id' => $this->id,
-            'isRequired' => $this->required
-        ];
+        return $this->$member;
     }
 }

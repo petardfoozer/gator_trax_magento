@@ -1,0 +1,47 @@
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <attributes>
+                    <children>
+                        <da translate="title" module="catalog">
+                            <title>Dependencies</title>
+                            <action>dependency/dependency/index</action>
+                        </da>
+                    </children>
+                </attributes>
+            </children>
+        </catalog>
+    </menu>
+        <!--<da translate="title" module="da">-->
+            <!--<title>Dependent Attributes</title>-->
+            <!--<sort_order>75</sort_order>-->
+            <!--<depends>-->
+                <!--<module>Mainstreethost_DependentAttributes</module>-->
+            <!--</depends>-->
+            <!--<children>-->
+                <!--<dependency translate="title" module="da">-->
+                    <!--<title>Manage</title>-->
+                    <!--<sort_order>10</sort_order>-->
+                    <!--<action>da_admin/dependency</action>-->
+                <!--</dependency>-->
+            <!--</children>-->
+        <!--</da>-->
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <da translate="title" module="da">
+                        <title>Dependent Attributes</title>
+                        <sort_order>75</sort_order>
+                        <children>
+                            <dependency translate="title" module="da">
+                                <title>Manage Dependent Attributes</title>
+                            </dependency>
+                        </children>
+                    </da>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

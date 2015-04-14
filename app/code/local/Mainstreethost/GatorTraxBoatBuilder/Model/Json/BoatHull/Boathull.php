@@ -6,7 +6,7 @@
  * Time: 1:09 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Boathull implements JsonSerializable
+class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Boathull extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
 {
     private $sku;
     private $boatHullName;
@@ -37,23 +37,8 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_BoatHull_Boathull implement
     }
 
 
-
-
-
-
-
-
-    public function jsonSerialize()
+    public function get($member)
     {
-        return [
-            'sku' => $this->sku,
-            'boatHullName' => $this->boatHullName,
-            'bottomSizeOption' => $this->bottomSizeOption,
-            'canHaveHybridRake' => $this->canHaveHybridRake,
-            'hybridRakeOption' => $this->hybridRakeOption,
-            'canHaveHuntDeck' => $this->canHaveHuntDeck,
-            'huntDeckOption' => $this->huntDeckOption,
-            'hullThicknessOption' => $this->hullThicknessOption
-        ];
+        return $this->$member;
     }
 }

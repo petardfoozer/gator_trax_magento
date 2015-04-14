@@ -6,7 +6,7 @@
  * Time: 3:44 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Boathull implements JsonSerializable
+class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Boathull extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
 {
     private $boatHulls;
     private $thirtyEight;
@@ -62,11 +62,9 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Boathull implements JsonSer
     }
 
 
-    public function jsonSerialize()
-    {
-        return [
-            'boatHullCollection' => $this->boatHulls
-        ];
-    }
 
+    public function get($member)
+    {
+        return $this->$member;
+    }
 }
