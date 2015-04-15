@@ -93,41 +93,59 @@ $this->getConnection()->createTable($table);
 
 
 $table_map = new Varien_Db_Ddl_Table();
-$table_map->setName($this->getTable('da/dependencymap'));
+$table_map->setName($this->getTable('da/dependency_map'));
+
+$table_map->addColumn(
+    'dependency_map_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => true,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => true
+    )
+);
 
 $table_map->addColumn(
     'attribute_code',
-    Varien_Db_Ddl_Table::TYPE_DATETIME,
-    null,
+    Varien_Db_Ddl_Table::TYPE_VARCHAR,
+    5000,
     array(
-        'nullable' => false,
+        'nullable' => true,
     )
 );
 
 $table_map->addColumn(
     'attribute_code_value_id',
-    Varien_Db_Ddl_Table::TYPE_DATETIME,
-    null,
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
     array(
-        'nullable' => false,
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
     )
 );
 
 $table_map->addColumn(
     'depends_on',
-    Varien_Db_Ddl_Table::TYPE_DATETIME,
-    null,
+    Varien_Db_Ddl_Table::TYPE_VARCHAR,
+    5000,
     array(
-        'nullable' => false,
+        'nullable' => true,
     )
 );
 
 $table_map->addColumn(
     'depends_on_value_id',
-    Varien_Db_Ddl_Table::TYPE_DATETIME,
-    null,
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
     array(
-        'nullable' => false,
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
     )
 );
 

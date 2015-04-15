@@ -144,4 +144,79 @@ class Mainstreethost_DependentAttributes_Helper_Data extends Mage_Core_Helper_Ab
     {
         return Mage::getModel('eav/entity_attribute')->load($id);
     }
+
+
+
+    public function GetAttributeValues($attributeId)
+    {
+        $attributeValues = array();
+        $attribute = Mage::getModel('eav/entity_attribute')->load($attributeId);
+
+        if($attribute->usesSource())
+        {
+            $attributeDetails = Mage::getModel('eav/config')->getAttribute('catalog_product', $attribute->getAttributeCode());
+            $attributeValues = $attributeDetails->getSource()->getAllOptions(true, true);
+
+            foreach($attributeValues as $key => $attributeValue)
+            {
+                if(empty($attributeValue['label']))
+                {
+                    unset($attributeValues[$key]);
+                }
+            }
+        }
+
+
+        return $attributeValues;
+    }
+
+
+
+    public function GetAttributeValueById($id)
+    {
+        return Mage::getModel('eav/entity_attribute_source_table')->getOptionText($id);
+    }
+
+
+    public function GetAttributeValueLabelById($id)
+    {
+        return $this->GetAttributeValueById($id);
+    }
+
+
+
+
+    public function GetAttributeNameById($id)
+    {
+        return Mage::getModel('eav/entity_attribute')->load($id)->getAttributeCode();
+    }
+
+
+
+    public function ParseFormData($data,$attributeCode,$dependsOn)
+    {
+        $returnArray = array();
+
+        foreach($data as $datum)
+        {
+            $attributeCodeValueId = $this->StripSquareBrackets(explode('-',$datum)[0]);
+            $dependsOnValueId = $this->StripSquareBrackets(explode('-',$datum)[1]);
+
+            array_push($returnArray,array(
+                'attribute_code' => $attributeCode,
+                'attribute_code_value_id' => $attributeCodeValueId,
+                'depends_on' => $dependsOn,
+                'depends_on_value_id' => $dependsOnValueId
+            ));
+        }
+
+        return $returnArray;
+    }
+
+
+    public function StripSquareBrackets($string)
+    {
+        return str_replace(']','',str_replace('[','',$string));
+    }
+
 }

@@ -17,9 +17,9 @@
                     <dependency>
                         <table>msh_dependencies</table>
                     </dependency>
-                    <dependencymap>
+                    <dependency_map>
                         <table>msh_dependency_map</table>
-                    </dependencymap>
+                    </dependency_map>
                 </entities>
             </da_resource>
         </models>

@@ -3,10 +3,10 @@
  * Created by PhpStorm.
  * User: bwalleshauser
  * Date: 2/11/2015
- * Time: 2:14 PM
+ * Time: 3:00 PM
  */
 
-class Mainstreethost_DependentAttributes_Model_Dependency extends Mage_Core_Model_Abstract
+class Mainstreethost_DependentAttributes_Model_Dependency_Map extends Mage_Core_Model_Abstract
 {
 
     protected function _construct()
@@ -21,7 +21,7 @@ class Mainstreethost_DependentAttributes_Model_Dependency extends Mage_Core_Mode
          * Mage::getResourceModel() is called
          * .
          */
-        $this->_init('da/dependency');
+        $this->_init('da/dependency_map');
     }
 
     /**
@@ -30,14 +30,14 @@ class Mainstreethost_DependentAttributes_Model_Dependency extends Mage_Core_Mode
 
     protected function _beforeSave()
     {
-        parent::_beforeSave();
-
-        if($this->getAttributeId() === $this->getDependsOn())
-        {
-            Mage::throwException('An attribute cannot depend on itself!');
-        }
-
-        $this->_updateTimestamps();
+//        parent::_beforeSave();
+//
+//        if($this->getAttributeId() === $this->getDependsOn())
+//        {
+//            Mage::throwException('An attribute cannot depend on itself!');
+//        }
+//
+//        $this->_updateTimestamps();
 
         return $this;
     }
@@ -59,15 +59,5 @@ class Mainstreethost_DependentAttributes_Model_Dependency extends Mage_Core_Mode
         }
 
         return $this;
-    }
-
-
-    public function loadByAttributeIdAndDependsOn($attributeId,$dependsOn)
-    {
-        $collection = $this->getCollection()
-            ->addFieldToFilter('attribute_id', $attributeId)
-            ->addFieldToFilter('depends_on', $dependsOn);
-
-        return $collection->getFirstItem();
     }
 }

@@ -15,6 +15,52 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
         $this->setDestElementId('manage_form');
     }
 
+    protected function _prepareForm()
+    {
+        // Instantiate a new form to display our origin for editing.
+        $form = new Varien_Data_Form(array(
+            'id' => 'manage_form',
+            'action' => $this->getUrl(
+                'da_admin/dependency/save',
+                array(
+                    '_current' => true
+                )
+            ),
+            'method' => 'post',
+        ));
+
+//        $fieldSet = $form->addFieldset(
+//            'general',
+//            array(
+//                'legend' => $this->__('Dependency Mapping')
+//            )
+//        );
+//
+//        $dependency = Mage::getModel('da/dependency')->load($this->getRequest()->getParam('id'));
+//        $attributeValues = $this->GetAttributeValues($dependency->getAttributeId());
+//        $dependsOnValues = $this->GetAttributeValues($dependency->getDependsOn());
+//
+//
+//        foreach($attributeValues as $attributeValue)
+//        {
+//            foreach($dependsOnValues as $dependsOnValue)
+//            {
+//                $fieldSet->addField($this->GetElementName($attributeValue['value'],$dependsOnValue['value']), 'checkbox',
+//                    array(
+//                        'label' => $this->GetElementName($attributeValue['value'],$dependsOnValue['value']),
+//                        'name' => $this->GetElementName($attributeValue['value'],$dependsOnValue['value'])
+//                    ));
+//            }
+//        }
+
+        $form->setUseContainer(true);
+        $this->setForm($form);
+
+        return parent::_prepareForm();
+    }
+
+
+
 
     public function GetAttributeValues($attributeId)
     {
@@ -34,7 +80,6 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
                 }
             }
         }
-
 
         return $attributeValues;
     }
@@ -74,18 +119,29 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
     }
 
 
-    public function GetRowHtml($attributeValues,$dependsOnValues)
+    public function GetRowHtml($attributeValues,$dependsOnValues,$dependencyMap)
     {
         $html = '';
 
         foreach($attributeValues as $attributeValue)
         {
             $html .= '<tr>';
-            $html .= '<td>' . $attributeValue['label'] . '</td>';
+            $html .= '<th>' . $attributeValue['label'] . '</th>';
 
             foreach($dependsOnValues as $dependsOnValue)
             {
-                $html .= '<td>' . $this->GetCheckboxHtml($attributeValue,$dependsOnValue) . '</td>';
+                $checked = false;
+
+                foreach($dependencyMap as $dependency)
+                {
+                    if($attributeValue['value'] === $dependency->getAttributeCodeValueId() && $dependsOnValue['value'] === $dependency->getDependsOnValueId())
+                    {
+                        $checked = true;
+                        break;
+                    }
+                }
+
+                $html .= '<td ' . ($checked ? 'class="checktrue"' : '') . ' onclick="clickable(this.firstElementChild)">' . $this->GetCheckboxHtml($attributeValue,$dependsOnValue,$checked) . '</td>';
             }
 
             $html .= '</tr>';
@@ -95,8 +151,30 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
     }
 
 
-    public function GetCheckboxHtml($attributeValue,$dependsOnValue)
+    public function GetCheckboxHtml($attributeValue,$dependsOnValue,$checked = false)
     {
-        return '<input type="checkbox" name="[' . $attributeValue['value'] . ']-[' . $dependsOnValue['value'] . ']" />';
+        return '<input value="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) . '" onclick="unbindcheck(this)" id="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) .'" type="checkbox" name="' . Mage::helper('da')->GetAttributeNameById($this->_getDependency()->getAttributeId()) . '[]" ' . ($checked ? 'checked' : '') . '/>';
+    }
+
+
+    public function GetElementName($attributeValue,$dependsOnValue)
+    {
+        return '[' . $attributeValue . ']-[' . $dependsOnValue . ']';
+    }
+
+
+    public function GetDependencyMap($id)
+    {
+        $dependency = Mage::getModel('da/dependency')->load($this->getRequest()->getParam('id'));
+        $attributeCode = Mage::helper('da')->GetAttributeById($dependency->getAttributeId())->getAttributeCode();
+        $dependsOn = Mage::helper('da')->GetAttributeById($dependency->getDependsOn())->getAttributeCode();
+        $dependencyMap = Mage::getModel('da/dependency_map')
+            ->getCollection()
+            ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
+            ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+            ->load()
+            ->getItems();
+
+        return $dependencyMap;
     }
 }

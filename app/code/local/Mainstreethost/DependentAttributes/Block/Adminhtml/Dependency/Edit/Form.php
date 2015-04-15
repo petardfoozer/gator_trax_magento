@@ -23,7 +23,7 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Edit_Form ex
             'method' => 'post',
         ));
         $form->setUseContainer(true);
-        $this->setForm($form);
+
         $dependency = $this->_getDependency();
 
         // Define a new fieldset. We need only one for our simple entity.
@@ -57,6 +57,8 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Edit_Form ex
              * before saving.
              */
         ));
+
+        $this->setForm($form);
 
         return $this;
     }

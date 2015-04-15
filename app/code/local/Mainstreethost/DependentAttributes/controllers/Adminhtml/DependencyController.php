@@ -57,7 +57,11 @@ class Mainstreethost_DependentAttributes_Adminhtml_DependencyController extends 
         Mage::register('current_dependency', $dependency);
 
         // Instantiate the form container.
-        $dependencyManageBlock = $this->getLayout()->createBlock('da/adminhtml_dependency_manage_grid');
+        $dependencyManageBlock = $this->getLayout()->createBlock('da/adminhtml_dependency_manage');
+
+        $dependencyManageBlock->removeButton('save');
+
+
 
         // Add the form container as the only item on this page.
         $this->loadLayout()
@@ -93,25 +97,57 @@ class Mainstreethost_DependentAttributes_Adminhtml_DependencyController extends 
         }
 
         // process $_POST data if the form was submitted
-        if ($postData = $this->getRequest()->getPost('dependencyData')) {
-            try {
-                $dependency->addData($postData);
-                $dependency->save();
+        if($postData = $this->getRequest()->getPost('dependencyData'))
+        {
 
-                $this->_getSession()->addSuccess(
-                    $this->__('The dependency has been saved.')
+            $attributeCode = Mage::helper('da')->GetAttributeById($dependency->getAttributeId())->getAttributeCode();
+            $dependsOn = Mage::helper('da')->GetAttributeById($dependency->getDependsOn())->getAttributeCode();
+
+
+            $dependencyMap = Mage::getModel('da/dependency_map')
+                ->getCollection()
+                ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
+                ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+                ->load()
+                ->getItems();
+
+            if(empty($dependencyMap))
+            {
+                try {
+                    $dependency->addData($postData);
+                    $dependency->save();
+
+                    $this->_getSession()->addSuccess(
+                        $this->__('The dependency has been saved.')
+                    );
+
+                    // redirect to remove $_POST data from the request
+
+                    return $this->_redirect(
+                        'dependency/dependency/manage',
+                    array('id' => $dependency->getDependencyId())
+                    );
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                    $this->_getSession()->addError($e->getMessage());
+                }
+            }
+            else
+            {
+                $this->_getSession()->addWarning(
+                    $this->__('This dependency already exists!  You can edit it below.')
                 );
 
-                // redirect to remove $_POST data from the request
+                $existingDependency = Mage::getModel('da/dependency')->loadByAttributeIdAndDependsOn($postData['attribute_id'],$postData['depends_on']);
 
                 return $this->_redirect(
-                    'dependency/dependency/index'
-                    //array('id' => $dependency->getId())
+                    'dependency/dependency/manage',
+                array('id' => $existingDependency->getDependencyId())
                 );
-            } catch (Exception $e) {
-                Mage::logException($e);
-                $this->_getSession()->addError($e->getMessage());
             }
+
+
+
 
             /**
              * If we get to here, then something went wrong. Continue to
@@ -141,7 +177,7 @@ class Mainstreethost_DependentAttributes_Adminhtml_DependencyController extends 
             $dependency->load($dependencyId);
         }
 
-        if (!$dependencyId->getId())
+        if (!$dependency->getDependencyId())
         {
             $this->_getSession()->addError(
                 $this->__('This dependency no longer exists.')
@@ -152,8 +188,25 @@ class Mainstreethost_DependentAttributes_Adminhtml_DependencyController extends 
             );
         }
 
+        $attributeCode = Mage::helper('da')->GetAttributeById($dependency->getAttributeId())->getAttributeCode();
+        $dependsOn = Mage::helper('da')->GetAttributeById($dependency->getDependsOn())->getAttributeCode();
+
+
+        $dependencyMap = Mage::getModel('da/dependency_map')
+            ->getCollection()
+            ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
+            ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+            ->load()
+            ->getItems();
+
         try {
             $dependency->delete();
+
+            foreach($dependencyMap as $map)
+            {
+                $map->delete();
+            }
+
 
             $this->_getSession()->addSuccess(
                 $this->__('The dependency has been deleted.')
@@ -225,5 +278,95 @@ class Mainstreethost_DependentAttributes_Adminhtml_DependencyController extends 
         }
 
         $this->_redirect('*/*/index');
+    }
+
+
+
+    public function saveAction()
+    {
+        $redirectBack = (bool)$this->getRequest()->getParam('back', false);
+        if ($data = $this->getRequest()->getPost())
+        {
+
+            $id = $this->getRequest()->getParam('id');
+            $model = Mage::getModel('da/dependency');
+
+            if($id)
+            {
+                $model->load($id);
+
+                if(!$model->getDependencyId())
+                {
+                    $attributeCode = Mage::helper('da')->GetAttributeById($id)->getAttributeCode();
+                    $dependsOn = Mage::helper('da')->GetAttributeById($id)->getAttributeCode();
+
+                    $dependencyMap = Mage::getModel('da/dependency_map')
+                        ->getCollection()
+                        ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
+                        ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+                        ->load()
+                        ->getItems();
+
+                    foreach($dependencyMap as $map)
+                    {
+                        $dependencyMap->delete();
+                    }
+
+                    $this->_getSession()->addError(
+                        Mage::helper('da')->__('This dependency no longer exists.')
+                    );
+                    $this->_redirect('*/*/');
+                    return;
+                }
+
+                $attributeCode = Mage::helper('da')->GetAttributeById($model->getAttributeId())->getAttributeCode();
+                $dependsOn = Mage::helper('da')->GetAttributeById($model->getDependsOn())->getAttributeCode();
+
+                $dependencyMap = Mage::getModel('da/dependency_map')
+                    ->getCollection()
+                    ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
+                    ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+                    ->load()
+                    ->getItems();
+
+                foreach($dependencyMap as $map)
+                {
+                    $map->delete();
+                }
+
+                $data = Mage::helper('da')->ParseFormData($data[$attributeCode],$attributeCode,$dependsOn);
+
+                try
+                {
+                    foreach($data as $datum)
+                    {
+                        Mage::getModel('da/dependency_map')->setData($datum)->save();
+                    }
+
+                    $this->_getSession()->addSuccess(
+                        Mage::helper('da')->__('The dependency has been saved.')
+                    );
+                }
+                catch (Mage_Core_Exception $e)
+                {
+                    $this->_getSession()->addError($e->getMessage());
+                    $redirectBack = true;
+                }
+                catch (Exception $e)
+                {
+                    $this->_getSession()->addError(Mage::helper('da')->__('Unable to save the dependency.'));
+                    $redirectBack = true;
+                    Mage::logException($e);
+                }
+            }
+
+            if ($redirectBack)
+            {
+                $this->_redirect('da_admin/dependency/manage', array('id' => $id));
+                return;
+            }
+        }
+
+        $this->_redirect('*/*/');
     }
 }
