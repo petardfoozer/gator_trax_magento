@@ -11,7 +11,6 @@ class Mainstreethost_GatorTraxBoatBuilder_AjaxController extends Mage_Core_Contr
     public function saveAction()
     {
         $post = $this->getRequest()->getParams();
-
         Mage::helper('gator/Cart')->ClearCart();
     }
 }
