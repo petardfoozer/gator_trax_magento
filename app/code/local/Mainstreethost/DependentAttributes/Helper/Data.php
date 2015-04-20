@@ -186,9 +186,14 @@ class Mainstreethost_DependentAttributes_Helper_Data extends Mage_Core_Helper_Ab
 
 
 
-    public function GetAttributeNameById($id)
+    public function GetAttributeCodeById($id)
     {
         return Mage::getModel('eav/entity_attribute')->load($id)->getAttributeCode();
+    }
+
+    public function GetAttributeNameById($id)
+    {
+        return Mage::getModel('eav/entity_attribute')->load($id)->getFrontendLabel();
     }
 
 
@@ -217,6 +222,24 @@ class Mainstreethost_DependentAttributes_Helper_Data extends Mage_Core_Helper_Ab
     public function StripSquareBrackets($string)
     {
         return str_replace(']','',str_replace('[','',$string));
+    }
+
+
+    public function FormatStringVertical($string)
+    {
+        $returnString = '';
+        $stringAsArray = str_split(strtoupper($string));
+
+        foreach($stringAsArray as $character)
+        {
+            $returnString .= $character;
+            if($character !== end($stringAsArray))
+            {
+                $returnString .= '<br />';
+            }
+        }
+
+        return $returnString;
     }
 
 }

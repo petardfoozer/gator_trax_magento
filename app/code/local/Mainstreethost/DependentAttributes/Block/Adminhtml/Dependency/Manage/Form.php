@@ -105,10 +105,32 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
     }
 
 
+    public function GetTableLabelLeft($attributeId,$numOfAttributeValues)
+    {
+        $html = '<tr>';
+        $html .= '<th class="vertical-header" rowspan="' . ($numOfAttributeValues + 1) . '">';
+        $html .= Mage::helper('da')->FormatStringVertical(Mage::helper('da')->GetAttributeNameById($attributeId));
+        $html .= '</th>';
+        $html .= '</tr>';
+
+        return $html;
+    }
+
+
+    public function GetTableLabelTop($dependsOn,$numOfDependsOnValues)
+    {
+        $html = '<th colspan="2"></th>';
+        $html .= '<th class="horizontal-header" colspan="' . $numOfDependsOnValues . '">';
+        $html .= strtoupper(Mage::helper('da')->GetAttributeNameById($dependsOn));
+        $html .= '</th>';
+
+        return $html;
+    }
+
 
     public function GetTableHeaderHtml($attributeValues)
     {
-        $html = '<th></th>';
+        $html = '<th colspan="2"></th>';
 
         foreach($attributeValues as $attributeValue)
         {
@@ -119,7 +141,7 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
     }
 
 
-    public function GetRowHtml($attributeValues,$dependsOnValues,$dependencyMap)
+    public function GetRowHtml($attributeValues,$dependsOnValues,$dependencyMap,$attributeId, $dependsOn)
     {
         $html = '';
 
@@ -153,7 +175,7 @@ class Mainstreethost_DependentAttributes_Block_Adminhtml_Dependency_Manage_Form 
 
     public function GetCheckboxHtml($attributeValue,$dependsOnValue,$checked = false)
     {
-        return '<input value="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) . '" onclick="unbindcheck(this)" id="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) .'" type="checkbox" name="' . Mage::helper('da')->GetAttributeNameById($this->_getDependency()->getAttributeId()) . '[]" ' . ($checked ? 'checked' : '') . '/>';
+        return '<input value="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) . '" onclick="unbindcheck(this)" id="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) .'" type="checkbox" name="' . Mage::helper('da')->GetAttributeCodeById($this->_getDependency()->getAttributeId()) . '[]" ' . ($checked ? 'checked' : '') . '/>';
     }
 
 
