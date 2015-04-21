@@ -1,0 +1,30 @@
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <profiles translate="title" module="catalog">
+                    <title>Profile Configurator</title>
+                    <action>pc/profile/index</action>
+                    <sort_order>99999</sort_order>
+                </profiles>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <pc translate="title" module="pc">
+                        <title>Profile Configurator</title>
+                        <sort_order>75</sort_order>
+                        <children>
+                            <profileconfig translate="title" module="pc">
+                                <title>Manage Profile Configuration</title>
+                            </profileconfig>
+                        </children>
+                    </pc>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

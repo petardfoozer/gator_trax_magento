@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <profileconfiguratorsettings translate="label" module="pc">
+            <tab>catalog</tab>
+            <label>Profile Configurator Settings</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>9999999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <profileconfiguratorgroup translate="label" module="pc">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <profileconfiguratorattribute translate="label" module="pc">
+                            <label>Attribute to use as Profile</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pc/system_config_source_attributevalues</source_model>
+                            <comment><![CDATA[This attribute's values will be used to create profiles in the Profile Configurator]]></comment>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </profileconfiguratorattribute>
+                    </fields>
+                </profileconfiguratorgroup>
+            </groups>
+        </profileconfiguratorsettings>
+    </sections>
+</config>

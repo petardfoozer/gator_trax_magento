@@ -2,43 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: bwalleshauser
- * Date: 4/7/2015
- * Time: 12:10 PM
+ * Date: 2/11/2015
+ * Time: 2:12 PM
  */ 
-class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_Abstract
+class Mainstreethost_ProfileConfigurator_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function ConvertToJson($data)
+    public function AttributeValuesToOptionArray(Mage_Eav_Model_Entity_Attribute $attribute)
     {
-        return json_encode($data);
+        $storeId = Mage::app()->getStore()->getId();
+        return $attribute->setStoreId($storeId)->getSource()->getAllOptions(false);
+    }
+
+    public function GetAttributeValueById($id)
+    {
+        return Mage::getModel('eav/entity_attribute_source_table')->getOptionText($id);
     }
 
 
-
-    public function FormatObjectForJsonConversion($data)
+    public function FormatAttributeLabelAndCode(Mage_Eav_Model_Entity_Attribute $attribute)
     {
-        $returnArray = array();
-        if (is_array($data) || is_object($data))
-        {
-            $reflector = new ReflectionClass($data);
-            $properties = $reflector->getProperties();
-
-            foreach ($properties as $property)
-            {
-                $returnArray[$property->getName()] = $this->FormatObjectForJsonConversion($data);
-            }
-
-            $return = $returnArray;
-        }
-        else
-        {
-            $return = $data;
-        }
-
-        return $return;
+        return $attribute->getFrontendLabel() . ' (' . $attribute->getAttributeCode() . ')';
     }
 
 
-    #region attribute stuff
     public function GetCustomProductAttributes()
     {
         $attributeSets = $this->GetAllAttributeSets();
@@ -139,20 +125,4 @@ class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_A
 
         return $returnArray;
     }
-
-
-    public function GetEntityAttributes($entityId)
-    {
-        $product = Mage::getModel('catalog/product')->load($entityId);
-
-        $attributes = $product->getAttributes();
-
-        return $attributes;
-    }
-
-
-
-
-
-    #endregion
 }

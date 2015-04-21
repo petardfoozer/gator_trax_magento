@@ -8,16 +8,21 @@
 
 class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Boatmodel extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
 {
-    private $boatModels;
+    private $id;
+    private $name;
+    private $collection;
 
     function __construct()
     {
-        $this->boatModels = array();
+        $this->id           = 'boatModel';
+        $this->name         = 'Boat Model';
+        $this->collection   = array();
     }
 
 
-    public function Hydrate($boatModels)
+    public function Hydrate($boatModelEntity)
     {
+        $attributes = $boatModelEntity
         foreach($boatModels as $boatModel)
         {
             array_push($this->boatModels,Mage::getModel('gator/Json_BoatModel_Boatmodel')->Hydrate($boatModel));
