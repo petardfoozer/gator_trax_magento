@@ -6,7 +6,7 @@
  * Time: 2:15 PM
  */
 
-class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController extends Mage_Adminhtml_Controller_Action
+class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationController extends Mage_Adminhtml_Controller_Action
 {
     public function indexAction()
     {
@@ -59,9 +59,9 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController exte
     {
         $configuration = Mage::getModel('pc/configuration');
 
-        if ($configurationId = $this->getRequest()->getParam('id', false))
+        if ($profileId = $this->getRequest()->getParam('id', false))
         {
-            $configuration->load($configurationId);
+            $configuration->load($profileId);
 
             if (!$configuration->getId())
             {
@@ -69,7 +69,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController exte
                     $this->__('This configuration no longer exists.')
                 );
                 return $this->_redirect(
-                    'profileconfiguration/configurations/index'
+                    'pc/configuration/index'
                 );
             }
         }
@@ -87,7 +87,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController exte
 
 
                 return $this->_redirect(
-                    'profileconfiguration/configurations/manage',
+                    'pc/configuration/manage',
                     array('id' => $configuration->getConfigurationId())
                 );
             }
@@ -121,7 +121,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController exte
             );
 
             return $this->_redirect(
-                'profileconfiguration/configurations/index'
+                'pc/configuration/index'
             );
         }
 
@@ -137,7 +137,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationsController exte
         }
 
         return $this->_redirect(
-            'profileconfiguration/configurations/index'
+            'pc/configuration/index'
         );
     }
 

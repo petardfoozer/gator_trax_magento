@@ -10,7 +10,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
 {
     public function indexAction()
     {
-        $this->_title($this->__('Product Configuration'));
+        $this->_title($this->__('Profile Configuration'));
 
 
         $block = $this->getLayout()
@@ -22,8 +22,9 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
     }
 
 
-    public function manageAction()
+    public function configureAction()
     {
+        $this->_title($this->__('Product Configuration'));
         $profile = Mage::getModel('pc/profile');
 
         if ($profileId = $this->getRequest()->getParam('id', false))
@@ -42,13 +43,24 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
         }
 
         Mage::register('current_profile', $profile);
-        $block = $this->getLayout()->createBlock('pc/adminhtml_profile_manage');
 
-        //$block->removeButton('save');
+        $this->loadLayout();
+        $this->_addContent($this->getLayout()->createBlock('pc/adminhtml_profile_configure'));
+        $this->renderLayout();
 
-        $this->loadLayout()
-            ->_addContent($block)
-            ->renderLayout();
+
+
+
+
+
+
+//        $block = $this->getLayout()->createBlock('pc/adminhtml_profile_manage_tabs');
+//
+//        //$block->removeButton('save');
+//
+//        $this->loadLayout()
+//            ->_addContent($block)
+//            ->renderLayout();
 
     }
 
@@ -74,6 +86,14 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
 
         if ($postData = $this->getRequest()->getPost('profileData'))
         {
+            if($postData['profile_attribute_value_id'] < 0)
+            {
+                $this->_getSession()->addError(
+                    $this->__('Please select a profile name.')
+                );
+                return $this->_redirect('pc/profile/edit');
+            }
+
             try
             {
                 $profile->addData($postData);
@@ -83,7 +103,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
                     $this->__('The profile has been saved.')
                 );
 
-                return $this->_redirect('pc/configuration/edit',array(
+                return $this->_redirect('pc/profile/configure',array(
                         'id' => $profile->getProfileId()
                     ));
             }

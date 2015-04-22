@@ -28,6 +28,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </profileconfiguratorattribute>
+                        <attributesetfordependentproducts translate="label" module="pc">
+                            <label>Attribute Set to use for Profile Configuration</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pc/system_config_source_attributesets</source_model>
+                            <comment><![CDATA[Products with this attribute set will be used to configure profiles and create rules]]></comment>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </attributesetfordependentproducts>
                     </fields>
                 </profileconfiguratorgroup>
             </groups>

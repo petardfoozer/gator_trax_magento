@@ -33,15 +33,17 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Edit_Form exten
 
 
         $this->_addFieldsToFieldset($fieldset, array(
-            'attribute_id' => array(
+            'profile_attribute_value_id' => array(
                 'label' => $this->__('Profile Name'),
                 'input' => 'select',
                 'required' => true,
-                'values' => Mage::helper('pc')->AttributeValuesToOptionArray(
-                    Mage::getModel('eav/entity_attribute')
-                        ->load(
-                            Mage::getStoreConfig('profileconfiguratorsettings/profileconfiguratorgroup/profileconfiguratorattribute')
-                        )
+                'values' => Mage::helper('pc')->PruneExistingProfilesFromOptionArray(
+                    Mage::helper('pc')->AttributeValuesToOptionArray(
+                        Mage::getModel('eav/entity_attribute')
+                            ->load(
+                                Mage::getStoreConfig('profileconfiguratorsettings/profileconfiguratorgroup/profileconfiguratorattribute')
+                            )
+                    )
                 )
             )
 //            'depends_on' => array(

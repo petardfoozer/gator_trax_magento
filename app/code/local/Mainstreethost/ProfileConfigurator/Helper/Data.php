@@ -7,6 +7,32 @@
  */ 
 class Mainstreethost_ProfileConfigurator_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    public function PruneExistingProfilesFromOptionArray(array $optionArray)
+    {
+        $profileCollection = Mage::getModel('pc/profile')
+            ->getCollection()
+            ->load()
+            ->getItems();
+        
+        foreach($profileCollection as $profile)
+        {
+            foreach($optionArray as $key => $option)
+            {
+                if($profile->getProfileAttributeValueId() === $option['value'])
+                {
+                    unset($optionArray[$key]);
+                }
+            }
+        }
+
+        array_unshift($optionArray,array(
+                'label' => '-Select a Profile Name-',
+                'value' => '-1'
+            ));
+
+        return $optionArray;
+    }
+
     public function AttributeValuesToOptionArray(Mage_Eav_Model_Entity_Attribute $attribute)
     {
         $storeId = Mage::app()->getStore()->getId();
@@ -15,7 +41,20 @@ class Mainstreethost_ProfileConfigurator_Helper_Data extends Mage_Core_Helper_Ab
 
     public function GetAttributeValueById($id)
     {
-        return Mage::getModel('eav/entity_attribute_source_table')->getOptionText($id);
+        $attributeId = Mage::getStoreConfig('profileconfiguratorsettings/profileconfiguratorgroup/profileconfiguratorattribute');
+        $attribute_code = Mage::getModel('eav/entity_attribute')->load($attributeId);
+        $attribute_details = Mage::getSingleton("eav/config")->getAttribute("catalog_product", $attribute_code);
+        $options = $attribute_details->getSource()->getAllOptions(false);
+
+        foreach($options as $option)
+        {
+            if($option['value'] === $id)
+            {
+                return $option['label'];
+            }
+        }
+
+        return '';
     }
 
 
@@ -53,7 +92,13 @@ class Mainstreethost_ProfileConfigurator_Helper_Data extends Mage_Core_Helper_Ab
 
     public function GetAllAttributeSets()
     {
-        return  Mage::getResourceModel('eav/entity_attribute_set_collection')
+        $entityTypeId = Mage::getModel('eav/entity')
+            ->setType('catalog_product')
+            ->getTypeId();
+
+        return  Mage::getModel('eav/entity_attribute_set')
+            ->getCollection()
+            ->setEntityTypeFilter($entityTypeId)
             ->load()
             ->getItems();
     }

@@ -19,7 +19,7 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Grid extends Ma
     public function getRowUrl($row)
     {
         return $this->getUrl(
-            'pc/profile/manage',
+            'pc/profile/configure',
             array(
                 'id' => $row->getId()
             )
@@ -41,28 +41,28 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Grid extends Ma
             'renderer' => 'Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Grid_Renderer'
         ));
 
-        $this->addColumn('created_at', array(
-            'header' => $this->_getHelper()->__('Created'),
-            'type' => 'datetime',
-            'index' => 'created_at',
-        ));
-
-        $this->addColumn('updated_at', array(
-            'header' => $this->_getHelper()->__('Updated'),
-            'type' => 'datetime',
-            'index' => 'updated_at',
-        ));
+//        $this->addColumn('created_at', array(
+//            'header' => $this->_getHelper()->__('Created'),
+//            'type' => 'datetime',
+//            'index' => 'created_at',
+//        ));
+//
+//        $this->addColumn('updated_at', array(
+//            'header' => $this->_getHelper()->__('Updated'),
+//            'type' => 'datetime',
+//            'index' => 'updated_at',
+//        ));
 
         $this->addColumn('action', array(
             'header' => $this->_getHelper()->__('Action'),
-            'width' => '50px',
+            'width' => '60px',
             'type' => 'action',
             'actions' => array(
                 array(
-                    'caption' => $this->_getHelper()->__('Manage'),
+                    'caption' => $this->_getHelper()->__('Configure'),
                     'url' => array(
                         'base' => 'pc'
-                            . '/configuration/edit',
+                            . '/profile/configure',
                     ),
                     'field' => 'id'
                 ),
