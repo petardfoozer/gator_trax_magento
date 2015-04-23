@@ -10,6 +10,6 @@ class Mainstreethost_ProfileConfigurator_Model_Resource_Configuration extends Ma
 {
     protected function _construct()
     {
-        $this->_init('pc/configuration','profile_id');
+        $this->_init('pc/configuration','configuration_id');
     }
 }

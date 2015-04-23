@@ -107,38 +107,61 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationController exten
 
     public function deleteAction()
     {
-        $configuration = Mage::getModel('pc/configuration');
+        $response = Mage::helper('pc')->__('Problem');
+        $config = Mage::getModel('pc/configuration');
+        $profile = Mage::getModel('pc/profile');
 
-        if ($configurationId = $this->getRequest()->getParam('id', false))
+        if ($profileId = $this->getRequest()->getParam('profile_id', false))
         {
-            $configuration->load($configurationId);
+            $profile->load($profileId);
+
+            if (!$profile->getProfileId())
+            {
+                $response = Mage::helper('pc')->__('This profile no longer exists.');
+
+                return $this->_redirect('pc/profile/index');
+            }
         }
 
-        if (!$configuration->getConfigurationId())
+        if ($postData = $this->getRequest()->getPost())
         {
-            $this->_getSession()->addError(
-                $this->__('This configuration no longer exists.')
-            );
+            unset($postData['form_key']);
 
-            return $this->_redirect(
-                'pc/configuration/index'
-            );
+            try
+            {
+                $config = $config->getCollection()
+                    ->addFieldToFilter('profile_id',
+                        array(
+                            array('eq' => $postData['profile_id'])
+                        )
+                    )
+                    ->addFieldToFilter('option_id',
+                        array(
+                            array('eq' => $postData['option_id']),
+                        )
+                        )
+                    ->addFieldToFilter('option_value_id',
+                        array(
+                            array('eq' => $postData['option_value_id']),
+                        )
+                    )
+                    ->load()
+                    ->getItems();
+
+                foreach($config as $c)
+                {
+                    $c->delete();
+                }
+                $response = Mage::helper('pc')->__('The configuration has been deleted.');
+            }
+            catch (Exception $e)
+            {
+                Mage::logException($e);
+                $this->_getSession()->addError($e->getMessage());
+            }
         }
 
-        try
-        {
-            $configuration->delete();
-            $this->_getSession()->addSuccess(
-                $this->__('The configuration has been deleted.')
-            );
-        } catch (Exception $e) {
-            Mage::logException($e);
-            $this->_getSession()->addError($e->getMessage());
-        }
-
-        return $this->_redirect(
-            'pc/configuration/index'
-        );
+        return $response;
     }
 
 
@@ -184,5 +207,45 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ConfigurationController exten
         }
 
         $this->_redirect('*/*/index');
+    }
+
+
+
+    public function saveAction()
+    {
+        $response = Mage::helper('pc')->__('Problem');
+        $config = Mage::getModel('pc/configuration');
+        $profile = Mage::getModel('pc/profile');
+
+        if ($profileId = $this->getRequest()->getParam('profile_id', false))
+        {
+            $profile->load($profileId);
+
+            if (!$profile->getProfileId())
+            {
+                $response = Mage::helper('pc')->__('This profile no longer exists.');
+
+                return $this->_redirect('pc/profile/index');
+            }
+        }
+
+        if ($postData = $this->getRequest()->getPost())
+        {
+            unset($postData['form_key']);
+
+            try
+            {
+                $config->addData($postData);
+                $config->save();
+                $response = Mage::helper('pc')->__('The configuration has been saved.');
+            }
+            catch (Exception $e)
+            {
+                Mage::logException($e);
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+
+        return $response;
     }
 }
