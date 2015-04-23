@@ -44,8 +44,11 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
 
         Mage::register('current_profile', $profile);
 
+        $block = $this->getLayout()->createBlock('pc/adminhtml_profile_configure');
+        $block->removeButton('save');
+        $block->removeButton('reset');
         $this->loadLayout();
-        $this->_addContent($this->getLayout()->createBlock('pc/adminhtml_profile_configure'));
+        $this->_addContent($block);
         $this->renderLayout();
 
 
@@ -141,6 +144,22 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_ProfileController extends Mag
 
         try
         {
+            $configs = Mage::getModel('pc/configuration')
+                ->getCollection()
+                ->addFieldToFilter('profile_id',
+                    array(
+                        array('eq' => $profile->getProfileId())
+                    )
+                )
+                ->load()
+                ->getItems();
+
+            foreach($configs as $config)
+            {
+                $config->delete();
+            }
+
+
             $profile->delete();
             $this->_getSession()->addSuccess(
                 $this->__('The profile has been deleted.')

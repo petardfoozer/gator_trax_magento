@@ -23,10 +23,10 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Configure exten
 //            'onclick' => 'submitGrid(0)',
 //        ), 10);
 //
-        $this->_addButton('save_and_continue_edit', array(
-            'class'   => 'save save_grid',
-            'label'   => Mage::helper('pc')->__('Save and Continue Edit'),
-            'onclick' => 'submitGrid(1)',
-        ), 10);
+//        $this->_addButton('save_and_continue_edit', array(
+//            'class'   => 'save save_grid',
+//            'label'   => Mage::helper('pc')->__('Save and Continue Edit'),
+//            'onclick' => 'submitGrid(1)',
+//        ), 10);
     }
 }

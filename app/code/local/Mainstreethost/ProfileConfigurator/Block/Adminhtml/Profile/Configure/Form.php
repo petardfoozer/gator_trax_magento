@@ -13,6 +13,8 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Configure_Form 
         parent::_construct();
         $this->setTemplate('msh/pc/form.phtml');
         $this->setDestElementId('configure_form');
+        $this->setSaveUrl($this->getUrl('pc_admin/configuration/save'));
+        $this->setDeleteUrl($this->getUrl('pc_admin/configuration/delete'));
     }
 
     protected function _prepareForm()
@@ -54,10 +56,13 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Configure_Form 
     public function GetProductOptions($product)
     {
         $options = array();
+        Mage::getSingleton('catalog/product_option')->unsetOptions();
         $product = Mage::getModel('catalog/product')->load($product->getEntityId());
 
         if($product->getHasOptions())
         {
+            Mage::getSingleton('catalog/product_option')->unsetData();
+            Mage::getSingleton('catalog/product_option')->unsetOldData();
             $options = $product->getOptions();
         }
 
@@ -86,98 +91,34 @@ class Mainstreethost_ProfileConfigurator_Block_Adminhtml_Profile_Configure_Form 
     }
 
 
-    public function GetTableLabelLeft($attributeId,$numOfAttributeValues)
+    public function doesConfigurationExist($profileId,$optionId,$optionValueId)
     {
-        $html = '<tr>';
-        $html .= '<th class="vertical-header" rowspan="' . ($numOfAttributeValues + 1) . '">';
-        $html .= Mage::helper('da')->FormatStringVertical(Mage::helper('da')->GetAttributeNameById($attributeId));
-        $html .= '</th>';
-        $html .= '</tr>';
-
-        return $html;
-    }
-
-
-    public function GetTableLabelTop($dependsOn,$numOfDependsOnValues)
-    {
-        $html = '<th colspan="2"></th>';
-        $html .= '<th class="horizontal-header" colspan="' . $numOfDependsOnValues . '">';
-        $html .= strtoupper(Mage::helper('da')->GetAttributeNameById($dependsOn));
-        $html .= '</th>';
-
-        return $html;
-    }
-
-
-    public function GetTableHeaderHtml($attributeValues)
-    {
-        $html = '<th colspan="2"></th>';
-
-        foreach($attributeValues as $attributeValue)
-        {
-            $html .= '<th>' . $attributeValue['label'] . '</th>';
-        }
-
-        return $html;
-    }
-
-
-    public function GetRowHtml($attributeValues,$dependsOnValues,$dependencyMap,$attributeId, $dependsOn)
-    {
-        $html = '';
-
-        foreach($attributeValues as $attributeValue)
-        {
-            $html .= '<tr>';
-            $html .= '<th>' . $attributeValue['label'] . '</th>';
-
-            foreach($dependsOnValues as $dependsOnValue)
-            {
-                $checked = false;
-
-                foreach($dependencyMap as $dependency)
-                {
-                    if($attributeValue['value'] === $dependency->getAttributeCodeValueId() && $dependsOnValue['value'] === $dependency->getDependsOnValueId())
-                    {
-                        $checked = true;
-                        break;
-                    }
-                }
-
-                $html .= '<td ' . ($checked ? 'class="checktrue"' : '') . ' onclick="clickable(this.firstElementChild)">' . $this->GetCheckboxHtml($attributeValue,$dependsOnValue,$checked) . '</td>';
-            }
-
-            $html .= '</tr>';
-        }
-
-        return $html;
-    }
-
-
-    public function GetCheckboxHtml($attributeValue,$dependsOnValue,$checked = false)
-    {
-        return '<input value="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) . '" onclick="unbindcheck(this)" id="' . $this->GetElementName($attributeValue['value'],$dependsOnValue['value']) .'" type="checkbox" name="' . Mage::helper('da')->GetAttributeCodeById($this->_getDependency()->getAttributeId()) . '[]" ' . ($checked ? 'checked' : '') . '/>';
-    }
-
-
-    public function GetElementName($attributeValue,$dependsOnValue)
-    {
-        return '[' . $attributeValue . ']-[' . $dependsOnValue . ']';
-    }
-
-
-    public function GetDependencyMap($id)
-    {
-        $dependency = Mage::getModel('da/dependency')->load($this->getRequest()->getParam('id'));
-        $attributeCode = Mage::helper('da')->GetAttributeById($dependency->getAttributeId())->getAttributeCode();
-        $dependsOn = Mage::helper('da')->GetAttributeById($dependency->getDependsOn())->getAttributeCode();
-        $dependencyMap = Mage::getModel('da/dependency_map')
+        $response = FALSE;
+        $config = Mage::getModel('pc/configuration')
             ->getCollection()
-            ->addFieldToFilter('attribute_code',array('eq' => $attributeCode))
-            ->addFieldToFilter('depends_on',array('eq' => $dependsOn))
+            ->addFieldToFilter('profile_id',
+                array(
+                    array('eq' => $profileId)
+                )
+            )
+            ->addFieldToFilter('option_id',
+                array(
+                    array('eq' => $optionId),
+                )
+            )
+            ->addFieldToFilter('option_value_id',
+                array(
+                    array('eq' => $optionValueId),
+                )
+            )
             ->load()
             ->getItems();
 
-        return $dependencyMap;
+        if(count($config))
+        {
+            $response = TRUE;
+        }
+
+        return $response;
     }
 }
