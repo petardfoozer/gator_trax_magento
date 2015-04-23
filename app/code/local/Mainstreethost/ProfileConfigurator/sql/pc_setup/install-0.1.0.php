@@ -127,52 +127,65 @@ $configsTable->addColumn(
 $configsTable->setOption('type','InnoDB');
 $configsTable->setOption('charset','utf8');
 $this->getConnection()->createTable($configsTable);
-//endregion
-//region rules table
-//$rulesTable = new Varien_Db_Ddl_Table();
-//$rulesTable->setName($this->getTable('pc/rule'));
-//$rulesTable->addColumn(
-//    'rule_id',
-//    Varien_Db_Ddl_Table::TYPE_INTEGER,
-//    10,
-//    array(
-//        'auto_increment' => true,
-//        'unsigned' => true,
-//        'nullable'=> false,
-//        'primary' => true
-//    )
-//);
-//$rulesTable->addColumn(
-//    'configuration_id',
-//    Varien_Db_Ddl_Table::TYPE_INTEGER,
-//    10,
-//    array(
-//        'auto_increment' => false,
-//        'unsigned' => true,
-//        'nullable'=> false,
-//        'primary' => false
-//    )
-//);
-//$rulesTable->addColumn(
-//    'created_at',
-//    Varien_Db_Ddl_Table::TYPE_DATETIME,
-//    null,
-//    array(
-//        'nullable' => false,
-//    )
-//);
-//$rulesTable->addColumn(
-//    'updated_at',
-//    Varien_Db_Ddl_Table::TYPE_DATETIME,
-//    null,
-//    array(
-//        'nullable' => false,
-//    )
-//);
-//$rulesTable->setOption('type','InnoDB');
-//$rulesTable->setOption('charset','utf8');
-//$this->getConnection()->createTable($rulesTable);
-//endregion
+
+$rulesTable = new Varien_Db_Ddl_Table();
+$rulesTable->setName($this->getTable('pc/rule'));
+$rulesTable->addColumn(
+    'rule_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => true,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => true
+    )
+);
+$rulesTable->addColumn(
+    'profile_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => true
+    )
+);
+$rulesTable->addColumn(
+    'configuration_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
+    )
+);
+$rulesTable->addColumn(
+    'option_value_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
+    )
+);
+$rulesTable->addColumn(
+    'created_at',
+    Varien_Db_Ddl_Table::TYPE_DATETIME,
+    null,
+    array(
+        'nullable' => false,
+    )
+);
+$rulesTable->setOption('type','InnoDB');
+$rulesTable->setOption('charset','utf8');
+$this->getConnection()->createTable($rulesTable);
+
 
 
 $this->endSetup();

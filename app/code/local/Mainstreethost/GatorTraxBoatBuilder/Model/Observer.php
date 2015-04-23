@@ -11,7 +11,7 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Observer
             if ($this->isCustomerLoggedIn()) {
                 $this->getCustomerCart();
                 $this->getGatorProducts();
-                $this->addProductToCart();
+//                $this->addProductToCart();
             }
         }
     }
@@ -60,20 +60,20 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Observer
         Mage::helper('gator/Cart')->ClearCart();
     }
 
-    public function addProductToCart()
-    {
-
-
-        //THIS IS PLACE HOLDER DATA, WILL NEED TO PUSH WHAT YANNICK SENDS TO ME INTO THE CART
-        $product_model = Mage::getSingleton('catalog/product');
-        $sku = "BOAT-MODEL-GEN-II";
-        $product_id = $product_model->getIdBySku($sku);
-        $product = $product_model->load($product_id);
-        $qty = 1;
-
-        $cart = Mage::getModel('checkout/cart');
-        $cart->addProduct($product, array('qty' => $qty));
-        $cart->save();
-        Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
-    }
+//    public function addProductToCart()
+//    {
+//
+//
+//        //THIS IS PLACE HOLDER DATA, WILL NEED TO PUSH WHAT YANNICK SENDS TO ME INTO THE CART
+//        $product_model = Mage::getSingleton('catalog/product');
+//        $sku = "BOAT-MODEL-GEN-II";
+//        $product_id = $product_model->getIdBySku($sku);
+//        $product = $product_model->load($product_id);
+//        $qty = 1;
+//
+//        $cart = Mage::getModel('checkout/cart');
+//        $cart->addProduct($product, array('qty' => $qty));
+//        $cart->save();
+//        Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
+//    }
 }
