@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <da_admin_dependency_manage>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><file>msh/da/styles.css</file></action>
+        </reference>
+    </da_admin_dependency_manage>
+</layout>
