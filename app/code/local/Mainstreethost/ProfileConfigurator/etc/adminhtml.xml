@@ -7,11 +7,6 @@
                     <action>pc/profile/index</action>
                     <sort_order>99999</sort_order>
                 </profiles>
-                <rules transtlate="title" module="catalog">
-                    <title>Rules</title>
-                    <sort_order>99999</sort_order>
-                    <action>pc/rules/index</action>
-                </rules>
             </children>
         </catalog>
     </menu>
