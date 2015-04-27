@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <pc_admin_profile_configure>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><file>msh/pc/styles.css</file></action>
+        </reference>
+    </pc_admin_profile_configure>
+</layout>

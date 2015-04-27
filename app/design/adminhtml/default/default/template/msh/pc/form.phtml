@@ -1,0 +1,193 @@
+<?php
+$_products = $this->GetDependentProducts();
+$_profile = $this->_getProfile();
+?>
+<div class="entry-edit">
+<form id="<?php echo $this->getForm()->getId() ?>" action="<?php echo $this->getForm()->getAction() ?>" method="<?php echo strtoupper($this->getForm()->getMethod()) ?>">
+    <input type="hidden" id="form_key" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+    <input type="hidden" id="saveUrl" name="saveUrl" value="<?php echo $this->getSaveUrl() ?>" />
+    <input type="hidden" id="deleteUrl" name="deleteUrl" value="<?php echo $this->getDeleteUrl() ?>" />
+    <?php foreach($_products as $_product): ?>
+        <div class="entry-edit-head collapseable">
+            <a id="product-<?php echo $_product->getEntityId() ?>-head" href="#" onclick="Fieldset.toggleCollapse('product-<?php echo $_product->getEntityId() ?>', ''); return false;" class="">
+                <?php echo $_product->getName() ?>
+            </a>
+        </div>
+        <input id="product-<?php echo $_product->getEntityId() ?>-state" name="config_state[product-<?php echo $_product->getEntityId() ?>]" type="hidden">
+        <fieldset class="profileconfiguration collapseable" id="product-<?php echo $_product->getEntityId() ?>" style="display:none">
+            <ul>
+                <?php $_options = $this->GetProductOptions($_product); ?>
+                <?php foreach($_options as $_option): ?>
+                    <li id="option-list-item-<?php echo $_option->getOptionId() ?>" class="option-list-item">
+                        <ul class="pc-option-value-list">
+                            <?php $_values = $_option->getValues(); ?>
+                            <?php foreach($_values as $_value): ?>
+                                <li>
+                                    <div onclick="clickable(this.getElementsByTagName('input')[0])" id="value-list-item-<?php echo $_value->getOptionTypeId() ?>" class="value-list-item<?php echo ($this->doesConfigurationExist($_profile->getProfileId(),$_option->getOptionId(),$_value->getOptionTypeId())) ? ' checktrue' : ''?>">
+                                        <h4>
+                                            <div>
+                                                <?php echo $_value->getTitle() ?>
+                                            </div>
+                                            <div>
+                                                <?php echo $_option->getTitle() ?>
+                                            </div>
+                                        </h4>
+                                        <div>
+                                            <input onchange="clickable(this)" type="checkbox" <?php echo ($this->doesConfigurationExist($_profile->getProfileId(),$_option->getOptionId(),$_value->getOptionTypeId())) ? 'checked="checked"' : ''?> />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a href="#">Manage Rules</a>
+                                    </div>
+                                 </li>
+                             <?php endforeach;?>
+                         </ul>
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        </fieldset>
+    <?php endforeach;?>
+</form>
+</div>
+<script>
+    var ajax = {};
+
+    ajax.x = function() {
+        if (typeof XMLHttpRequest !== 'undefined') {
+            return new XMLHttpRequest();
+        }
+        var versions = [
+            "MSXML2.XmlHttp.5.0",
+            "MSXML2.XmlHttp.4.0",
+            "MSXML2.XmlHttp.3.0",
+            "MSXML2.XmlHttp.2.0",
+            "Microsoft.XmlHttp"
+        ];
+
+        var xhr;
+        for(var i = 0; i < versions.length; i++) {
+            try {
+                xhr = new ActiveXObject(versions[i]);
+                break;
+            } catch (e) {
+            }
+        }
+        return xhr;
+    };
+
+    ajax.send = function(url, callback, method, data, sync) {
+        var x = ajax.x();
+        x.open(method, url, sync);
+        x.onreadystatechange = function() {
+            if (x.readyState == 4) {
+                callback(x.responseText)
+            }
+        };
+        if (method == 'POST') {
+            x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        }
+        x.send(data)
+    };
+
+    ajax.get = function(url, data, callback, sync) {
+        var query = [];
+        for (var key in data) {
+            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        }
+        ajax.send(url + '?' + query.join('&'), callback, 'GET', null, sync)
+    };
+
+    ajax.post = function(url, data, callback, sync) {
+        var query = [];
+        for (var key in data) {
+            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        }
+        ajax.send(url, callback, 'POST', query.join('&'), sync)
+    };
+
+    var findAncestor = function(el,cls)
+    {
+        while ((el = el.parentNode) && !el.classList.contains(cls));
+        return el;
+    };
+
+    var saveConfig = function(e)
+    {
+        var optionId = findAncestor(e,'option-list-item').id.replace('option-list-item-','');
+        var optionValueId = findAncestor(e,'value-list-item').id.replace('value-list-item-','');
+
+        if(e.checked)
+        {
+            ajax.post(
+                document.getElementById('saveUrl').value,
+                {
+                    form_key:           document.getElementById('form_key').value,
+                    profile_id:         <?php echo $this->_getProfile()->getProfileId() ?>,
+                    option_id :         parseInt(optionId),
+                    option_value_id:    parseInt(optionValueId)
+                },
+                function()
+                {
+
+                },
+                true
+            );
+        }
+        else
+        {
+            ajax.post(
+                document.getElementById('deleteUrl').value,
+                {
+                    form_key:           document.getElementById('form_key').value,
+                    profile_id:         <?php echo $this->_getProfile()->getProfileId() ?>,
+                    option_id :         parseInt(optionId),
+                    option_value_id:    parseInt(optionValueId)
+                },
+                function()
+                {
+
+                },
+                true
+            );
+        }
+    };
+
+    var removeClass = function(node, cls)
+    {
+        if(node && node.className && node.className.indexOf(cls) >= 0)
+        {
+            var pattern = new RegExp('\\s*' + cls + '\\s*');
+            node.className = node.className.replace(pattern, ' ');
+        }
+    };
+
+    var classSwap = function(e)
+    {
+        if(e.checked)
+        {
+            e.parentNode.parentNode.className = e.parentNode.parentNode.className + " checktrue";
+        }
+        else
+        {
+            removeClass(e.parentNode.parentNode,'checktrue');
+        }
+    };
+
+    var clickable = function(e)
+    {
+        e.checked = !e.checked;
+        classSwap(e);
+        saveConfig(e);
+    };
+
+    var submitGrid = function(stayOnPage)
+    {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'back';
+        input.value = stayOnPage;
+
+        document.getElementById('<?php echo $this->getDestElementId()?>').appendChild(input);
+        document.getElementById('<?php echo $this->getDestElementId()?>').submit();
+    };
+</script>

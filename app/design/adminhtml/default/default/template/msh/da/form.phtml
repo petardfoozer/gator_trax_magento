@@ -1,0 +1,58 @@
+<?php
+$dependency = $this->_getDependency();
+$attributeValues = $this->GetAttributeValues($dependency->getAttributeId());
+$dependsOnValues = $this->GetAttributeValues($dependency->getDependsOn());
+$dependencyMap = $this->GetDependencyMap();
+$this->getFormHtml();
+?>
+<div class="entry-edit-checkboxes">
+<form id="<?php echo $this->getForm()->getId() ?>" action="<?php echo $this->getForm()->getAction() ?>" method="<?php echo strtoupper($this->getForm()->getMethod()) ?>">
+    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+<table id="checkboxes" class="data">
+    <thead>
+        <tr>
+            <?php echo $this->GetTableLabelTop($dependency->getDependsOn(),count($dependsOnValues)) ?>
+        </tr>
+        <tr>
+            <?php echo $this->GetTableHeaderHtml($dependsOnValues,$dependency->getAttributeId(),$dependency->getDependsOn()) ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php echo $this->GetTableLabelLeft($dependency->getAttributeId(),count($attributeValues)) ?>
+        <?php echo $this->GetRowHtml($attributeValues,$dependsOnValues,$dependencyMap) ?>
+    </tbody>
+
+</table>
+</form>
+</div>
+<script>
+    var clickable = function(e)
+    {
+        if(!e.checked)
+        {
+            e.checked = true;
+            e.parentNode.className = "checktrue";
+        }
+        else
+        {
+            e.checked = false;
+            e.parentNode.className = "";
+        }
+    };
+
+    var unbindcheck = function(e)
+    {
+        e.checked = !e.checked;
+    };
+
+    var submitGrid = function(stayOnPage)
+    {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'back';
+        input.value = stayOnPage;
+
+        document.getElementById('manage_form').appendChild(input);
+        document.getElementById('manage_form').submit();
+    };
+</script>
