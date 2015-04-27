@@ -17,7 +17,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
 
     }
 
-    public function editAction()
+    public function addAction()
     {
         $rule = Mage::getModel('pc/rule');
 
@@ -112,6 +112,11 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
             echo json_encode($postData);
         }
 
+    }
+
+    public function testAction()
+    {
+        return true;
     }
 
 }
