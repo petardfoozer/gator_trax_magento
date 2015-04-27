@@ -114,4 +114,9 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
 
     }
 
+    public function testAction()
+    {
+        return true;
+    }
+
 }
