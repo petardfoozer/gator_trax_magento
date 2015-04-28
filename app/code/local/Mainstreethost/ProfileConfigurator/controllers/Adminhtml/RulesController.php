@@ -29,7 +29,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
             {
                 $this->_getSesssion()->addError($this->__('This rule no longer exists!'));
 
-                return $this->_redirect('pc/rules/index');
+                return $this->_redirect('pc/profile/index');
             }
         }
 
@@ -45,7 +45,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
                 $rule->save();
 
                 $this->_getSession()->addSuccess($this->__('The rule has been saved'));
-                return $this->_redirect('pc/rules/index'/**, array('id' => $rule->getRuleId())**/);
+                return $this->_redirect('pc/profile/index'/**, array('id' => $rule->getRuleId())**/);
             }
             catch(Exception $e)
             {
@@ -53,10 +53,6 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
                 $this->_getSession()->addError($e->getMessage());
             }
         }
-
-        Mage::register('current_rule', $rule);
-        $block = $this->getLayout()->createBlock('pc/adminhtml_rule_edit');
-        $this->loadLayout()->_addContent($block)->renderLayout();
 
     }
 
@@ -73,7 +69,7 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
         {
             $this->_getSession()->addError($this->__('This rule no longer exists!'));
             /** AGAIN!! we will not want to redirect if there is a failure, as this will be ajaxd in, but for now it will re-direct to profile/index */
-            return $this->_redirect('pc/rules/index');
+            return $this->_redirect('pc/proile/index');
         }
 
         try
@@ -87,24 +83,21 @@ class Mainstreethost_ProfileConfigurator_Adminhtml_RulesController extends Mage_
             $this->_getSession()->addError($e->getMessage());
         }
 
-        return $this->_redirect('pc/rules/index');
+        return $this->_redirect('pc/profile/index');
 
     }
 
     public function findAction()
     {
-        $rule = Mage::getModel('pc/rule');
+        $rules = Mage::getModel('pc/rule')->getCollection();
 
-        if($ruleId = $this->getRequest()->getParam('id', false))
+        if($configurationId = $this->getRequest()->getParam('id', false))
         {
-            $rule->load($ruleId);
-
-            if (!$rule->getId())
-            {
-                $this->_getSesssion()->addError($this->__('This rule does not exist!'));
-
-                return $this->_redirect('pc/rules/index');
-            }
+            $rules->addFieldToFilter('configuration_id',
+                array(
+                    array('eq' => $configurationId)
+                )
+            )->load();
         }
 
         if($postData = $this->getRequest()->getPost('ruleData'))
