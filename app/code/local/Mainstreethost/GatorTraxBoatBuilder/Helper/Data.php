@@ -7,8 +7,28 @@
  */ 
 class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    public function ConvertToJson($data)
+    //http://www.mendoweb.be/blog/php-convert-string-to-camelcase-string/
+    public function CamelCase($str, array $noStrip = [])
     {
+        // non-alpha and non-numeric characters become spaces
+        $str = preg_replace('/[^a-z0-9' . implode("", $noStrip) . ']+/i', ' ', $str);
+        $str = trim($str);
+        // uppercase the first character of each word
+        $str = ucwords($str);
+        $str = str_replace(" ", "", $str);
+        $str = lcfirst($str);
+
+        return $str;
+    }
+
+
+    public function ConvertToJson($data,$pretty = FALSE)
+    {
+        if($pretty)
+        {
+            return json_encode($data,JSON_PRETTY_PRINT);
+        }
+
         return json_encode($data);
     }
 
@@ -151,8 +171,44 @@ class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_A
     }
 
 
+    public function DoesProductHaveAttribute(Mage_Catalog_Model_Product $product, $attributeId)
+    {
+        return in_array(Mage::getModel('eav/entity_attribute')->load($attributeId)->getDefaultTitle(),$product->getData());
+    }
 
+
+    public function GetAttributeValueById($id)
+    {
+        $attributeId = Mage::getStoreConfig('profileconfiguratorsettings/profileconfiguratorgroup/profileconfiguratorattribute');
+        $attribute_code = Mage::getModel('eav/entity_attribute')->load($attributeId);
+        $attribute_details = Mage::getSingleton("eav/config")->getAttribute("catalog_product", $attribute_code);
+        $options = $attribute_details->getSource()->getAllOptions(false);
+
+        foreach($options as $option)
+        {
+            if($option['value'] === $id)
+            {
+                return $option['label'];
+            }
+        }
+
+        return '';
+    }
 
 
     #endregion
+
+
+    public function GetOptionNameFromId($optionId)
+    {
+                //sigh
+        return Mage::getModel('catalog/product')->load(Mage::getModel('catalog/product_option')->load($optionId)->getProductId())->getOptions()[$optionId]->getDefaultTitle();
+    }
+
+
+    public function GetOptionValueNameFromId($optionId,$optionValueId)
+    {
+                //double sigh
+        return Mage::getModel('catalog/product')->load(Mage::getModel('catalog/product_option')->load($optionId)->getProductId())->getOptions()[$optionId]->getValues()[$optionValueId]->getDefaultTitle();
+    }
 }

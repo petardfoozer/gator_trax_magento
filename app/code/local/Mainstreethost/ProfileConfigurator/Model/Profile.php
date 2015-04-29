@@ -15,6 +15,11 @@ class Mainstreethost_ProfileConfigurator_Model_Profile extends Mage_Core_Model_A
     }
 
 
+    public function LoadByAttributeValueId($attributeValueId)
+    {
+        return $this->getCollection()->addFieldToFilter('profile_attribute_value_id',array('eq' => $attributeValueId))->load()->getFirstItem();
+    }
+
     protected function _beforeSave()
     {
         parent::_beforeSave();
