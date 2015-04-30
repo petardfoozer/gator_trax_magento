@@ -14,6 +14,11 @@ class Mainstreethost_ProfileConfigurator_Model_Configuration extends Mage_Core_M
         $this->_init('pc/configuration');
     }
 
+    public function LoadByProfileId($profileId)
+    {
+        return $this->getCollection()->addFieldToFilter('profile_id',array('eq' => $profileId))->load();
+    }
+
 
     protected function _beforeSave()
     {

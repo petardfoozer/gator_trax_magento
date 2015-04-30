@@ -142,7 +142,18 @@ $rulesTable->addColumn(
     )
 );
 $rulesTable->addColumn(
-    'entity_id',
+    'profile_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => true
+    )
+);
+$rulesTable->addColumn(
+    'configuration_id',
     Varien_Db_Ddl_Table::TYPE_INTEGER,
     10,
     array(
@@ -175,7 +186,7 @@ $rulesTable->addColumn(
     )
 );
 $rulesTable->addColumn(
-    'target_entity_id',
+    'target_option_value_id',
     Varien_Db_Ddl_Table::TYPE_INTEGER,
     10,
     array(
@@ -185,61 +196,7 @@ $rulesTable->addColumn(
         'primary' => false
     )
 );
-$rulesTable->addColumn(
-    'target_entity_name',
-    Varien_Db_Ddl_Table::TYPE_VARCHAR,
-    10,
-    array(
-        'auto_increment' => false,
-        'unsigned' => true,
-        'nullable'=> false,
-        'primary' => false
-    )
-);
-$rulesTable->addColumn(
-    'target_option_value',
-    Varien_Db_Ddl_Table::TYPE_INTEGER,
-    10,
-    array(
-        'auto_increment' => false,
-        'unsigned' => true,
-        'nullable'=> false,
-        'primary' => false
-    )
-);
-$rulesTable->addColumn(
-    'target_option_value_name',
-    Varien_Db_Ddl_Table::TYPE_VARCHAR,
-    10,
-    array(
-        'auto_increment' => false,
-        'unsigned' => true,
-        'nullable'=> false,
-        'primary' => false
-    )
-);
-$rulesTable->addColumn(
-    'profile_id',
-    Varien_Db_Ddl_Table::TYPE_INTEGER,
-    10,
-    array(
-        'auto_increment' => false,
-        'unsigned' => true,
-        'nullable'=> false,
-        'primary' => true
-    )
-);
-$rulesTable->addColumn(
-    'configuration_id',
-    Varien_Db_Ddl_Table::TYPE_INTEGER,
-    10,
-    array(
-        'auto_increment' => false,
-        'unsigned' => true,
-        'nullable'=> false,
-        'primary' => false
-    )
-);
+
 $rulesTable->addColumn(
     'created_at',
     Varien_Db_Ddl_Table::TYPE_DATETIME,

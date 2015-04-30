@@ -8,5 +8,6 @@
 
 interface Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
 {
+    //this is because of protected members
     public function get($member);
 }
