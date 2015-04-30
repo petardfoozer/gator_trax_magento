@@ -28,13 +28,12 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Configuration
         $this->name             = Mage::helper('gator')->GetOptionValueNameFromId($configuration->getOptionId(),$configuration->getOptionValueId()) . ' ' . Mage::helper('gator')->GetOptionNameFromId($configuration->getOptionId());
         $this->optionId         = $configuration->getOptionId();
         $this->optionValueId    = $configuration->getOptionValueId();
+        $rules                  = Mage::getModel('pc/rule')->LoadByConfigurationId($configuration->getConfigurationId());
 
-
-
-
-
-
-
+        foreach ($rules as $rule)
+        {
+            array_push($this->rules,Mage::getModel('gator/Json_Rule')->Hydrate($rule));
+        }
 
         return $this;
     }

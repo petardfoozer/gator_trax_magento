@@ -22,18 +22,14 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Profile
 
     public function Hydrate($profile)
     {
-        $this->id                   = (int)$profile->getProfileId();
-        $this->name                 = Mage::helper('gator')->GetAttributeValueById($profile->getProfileAttributeValueId());
-        $configurationCollection    = Mage::getModel('pc/configuration')->LoadByProfileId($profile->getProfileId());
+        $this->id       = (int)$profile->getProfileId();
+        $this->name     = Mage::helper('gator')->GetAttributeValueById($profile->getProfileAttributeValueId());
+        $configurations = Mage::getModel('pc/configuration')->LoadByProfileId($profile->getProfileId());
 
-        foreach ($configurationCollection as $configuration)
+        foreach ($configurations as $configuration)
         {
             array_push($this->configurations,Mage::getModel('gator/Json_Configuration')->Hydrate($configuration));
         }
-
-
-
-
 
         return $this;
     }

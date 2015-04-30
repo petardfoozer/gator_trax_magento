@@ -211,4 +211,10 @@ class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_A
                 //double sigh
         return Mage::getModel('catalog/product')->load(Mage::getModel('catalog/product_option')->load($optionId)->getProductId())->getOptions()[$optionId]->getValues()[$optionValueId]->getDefaultTitle();
     }
+
+
+    public function GetOptionIdFromOptionValueId($optionValueId)
+    {
+        return (int)Mage::getModel('catalog/product_option_value')->load($optionValueId)->getOptionId();
+    }
 }
