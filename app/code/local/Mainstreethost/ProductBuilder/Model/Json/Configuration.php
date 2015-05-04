@@ -6,9 +6,9 @@
  * Time: 6:39 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Configuration
-    extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract
-    implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Configuration
+    extends Mainstreethost_ProductBuilder_Model_Json_Abstract
+    implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $name;
@@ -25,14 +25,14 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Configuration
     public function Hydrate($configuration)
     {
         $this->id               = (int)$configuration->getConfigurationId();
-        $this->name             = Mage::helper('gator')->GetOptionValueNameFromId($configuration->getOptionId(),$configuration->getOptionValueId()) . ' ' . Mage::helper('gator')->GetOptionNameFromId($configuration->getOptionId());
+        $this->name             = Mage::helper(('pb'))->GetOptionValueNameFromId($configuration->getOptionId(),$configuration->getOptionValueId()) . ' ' . Mage::helper(('pb'))->GetOptionNameFromId($configuration->getOptionId());
         $this->optionId         = $configuration->getOptionId();
         $this->optionValueId    = $configuration->getOptionValueId();
         $rules                  = Mage::getModel('pc/rule')->LoadByConfigurationId($configuration->getConfigurationId());
 
         foreach ($rules as $rule)
         {
-            array_push($this->rules,Mage::getModel('gator/Json_Rule')->Hydrate($rule));
+            array_push($this->rules,Mage::getModel('pb/Json_Rule')->Hydrate($rule));
         }
 
         return $this;

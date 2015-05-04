@@ -6,7 +6,7 @@
  * Time: 6:06 PM
  */
 
-abstract class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements JsonSerializable
+abstract class Mainstreethost_ProductBuilder_Model_Json_Abstract implements JsonSerializable
 {
     public function jsonSerialize()
     {

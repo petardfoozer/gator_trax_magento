@@ -6,7 +6,7 @@
  * Time: 2:20 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Helper_Cart extends Mage_Core_Helper_Abstract
+class Mainstreethost_ProductBuilder_Helper_Cart extends Mage_Core_Helper_Abstract
 {
     public function ClearCart()
     {

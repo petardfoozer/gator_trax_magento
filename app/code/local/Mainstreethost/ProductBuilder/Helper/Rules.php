@@ -6,7 +6,7 @@
  * Time: 4:02 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Helper_Rules extends Mage_Core_Helper_Abstract
+class Mainstreethost_ProductBuilder_Helper_Rules extends Mage_Core_Helper_Abstract
 {
     public function GetBoatAttributeGroupsByAttributeSetId($attributeId)
     {

@@ -6,9 +6,9 @@
  * Time: 5:45 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Rule
-    extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract
-    implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Rule
+    extends Mainstreethost_ProductBuilder_Model_Json_Abstract
+    implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $optionId;
@@ -25,9 +25,9 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Rule
     public function Hydrate($rule)
     {
         $this->id                   = (int)$rule->getRuleId();
-        $this->optionId             = Mage::helper('gator')->GetOptionIdFromOptionValueId($rule->getOptionValueId());
+        $this->optionId             = Mage::helper(('pb'))->GetOptionIdFromOptionValueId($rule->getOptionValueId());
         $this->optionValueId        = (int)$rule->getOptionValueId();
-        $this->targetOptionId       = Mage::helper('gator')->GetOptionIdFromOptionValueId($rule->getTargetOptionValueId());
+        $this->targetOptionId       = Mage::helper(('pb'))->GetOptionIdFromOptionValueId($rule->getTargetOptionValueId());
         $this->targetOptionValueId  = (int)$rule->getTargetOptionValueId();
         $this->operator             = $rule->getOperator();
 

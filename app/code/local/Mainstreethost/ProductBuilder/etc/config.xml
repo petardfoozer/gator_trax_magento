@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Mainstreethost_GatorTraxBoatBuilder>
+        <Mainstreethost_ProductBuilder>
             <version>0.1.0</version>
-        </Mainstreethost_GatorTraxBoatBuilder>
+        </Mainstreethost_ProductBuilder>
     </modules>
     <frontend>
         <routers>
             <boatbuilder>
                 <use>standard</use>
                 <args>
-                    <module>Mainstreethost_GatorTraxBoatBuilder</module>
+                    <module>Mainstreethost_ProductBuilder</module>
                     <frontName>boatbuilder</frontName>
                 </args>
             </boatbuilder>
@@ -18,32 +18,32 @@
     </frontend>
     <global>
         <models>
-            <gator>
-                <class>Mainstreethost_GatorTraxBoatBuilder_Model</class>
-                <resourceModel>gator_resource</resourceModel>
-            </gator>
-            <gator_resource>
-                <class>Mainstreethost_GatorTraxBoatBuilder_Model_Resource</class>
-            </gator_resource>
+            <pb>
+                <class>Mainstreethost_ProductBuilder_Model</class>
+                <resourceModel>pb_resource</resourceModel>
+            </pb>
+            <pb_resource>
+                <class>Mainstreethost_ProductBuilder_Model_Resource</class>
+            </pb_resource>
         </models>
         <blocks>
-            <gator>
-                <class>Mainstreethost_GatorTraxBoatBuilder_Block</class>
-            </gator>
+            <pb>
+                <class>Mainstreethost_ProductBuilder_Block</class>
+            </pb>
         </blocks>
         <helpers>
-            <gator>
-                <class>Mainstreethost_GatorTraxBoatBuilder_Helper</class>
-            </gator>
+            <pb>
+                <class>Mainstreethost_ProductBuilder_Helper</class>
+            </pb>
         </helpers>
         <events>
             <controller_action_predispatch>
                 <observers>
-                    <Mainstreethost_gatortraxboatbuilder_model_observer>
+                    <Mainstreethost_ProductBuilder_model_observer>
                         <type>model</type>
-                        <class>Mainstreethost_GatorTraxBoatBuilder_Model_Observer</class>
-                        <method>getGatorProducts</method>
-                    </Mainstreethost_gatortraxboatbuilder_model_observer>
+                        <class>Mainstreethost_ProductBuilder_Model_Observer</class>
+                        <method>getpbProducts</method>
+                    </Mainstreethost_ProductBuilder_model_observer>
                 </observers>
             </controller_action_predispatch>
         </events>

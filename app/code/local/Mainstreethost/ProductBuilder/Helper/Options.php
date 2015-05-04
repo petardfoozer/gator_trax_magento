@@ -6,7 +6,7 @@
  * Time: 6:37 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Helper_Options extends Mage_Core_Helper_Abstract
+class Mainstreethost_ProductBuilder_Helper_Options extends Mage_Core_Helper_Abstract
 {
     public function GetOptionNameById($id,$product)
     {

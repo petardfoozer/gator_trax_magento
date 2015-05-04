@@ -5,7 +5,7 @@
  * Date: 4/7/2015
  * Time: 12:10 PM
  */ 
-class Mainstreethost_GatorTraxBoatBuilder_Helper_Data extends Mage_Core_Helper_Abstract
+class Mainstreethost_ProductBuilder_Helper_Data extends Mage_Core_Helper_Abstract
 {
     //http://www.mendoweb.be/blog/php-convert-string-to-camelcase-string/
     public function CamelCase($str, array $noStrip = [])

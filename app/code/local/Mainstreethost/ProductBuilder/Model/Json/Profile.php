@@ -6,9 +6,9 @@
  * Time: 5:27 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Profile
-    extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract
-    implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Profile
+    extends Mainstreethost_ProductBuilder_Model_Json_Abstract
+    implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $name;
@@ -23,12 +23,12 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Profile
     public function Hydrate($profile)
     {
         $this->id       = (int)$profile->getProfileId();
-        $this->name     = Mage::helper('gator')->GetAttributeValueById($profile->getProfileAttributeValueId());
+        $this->name     = Mage::helper(('pb'))->GetAttributeValueById($profile->getProfileAttributeValueId());
         $configurations = Mage::getModel('pc/configuration')->LoadByProfileId($profile->getProfileId());
 
         foreach ($configurations as $configuration)
         {
-            array_push($this->configurations,Mage::getModel('gator/Json_Configuration')->Hydrate($configuration));
+            array_push($this->configurations,Mage::getModel('pb/Json_Configuration')->Hydrate($configuration));
         }
 
         return $this;

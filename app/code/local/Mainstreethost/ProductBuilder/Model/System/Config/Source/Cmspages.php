@@ -6,7 +6,7 @@
  * Time: 1:31 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_System_Config_Source_Cmspages
+class Mainstreethost_ProductBuilder_Model_System_Config_Source_Cmspages
 {
     public function toOptionArray()
     {
@@ -17,7 +17,7 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_System_Config_Source_Cmspages
         {
             array_push($returnArray,array(
                 'value' => $page->getIdentifier(),
-                'label' => Mage::helper('gator')->__($page->getTitle())
+                'label' => Mage::helper(('pb'))->__($page->getTitle())
             ));
         }
 

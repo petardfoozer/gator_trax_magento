@@ -6,9 +6,9 @@
  * Time: 2:15 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Attribute
-    extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract
-    implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Attribute
+    extends Mainstreethost_ProductBuilder_Model_Json_Abstract
+    implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $name;
@@ -21,7 +21,7 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Attribute
 
     public function Hydrate($attribute)
     {
-        $this->id = Mage::helper('gator')->CamelCase($attribute->getFrontendLabel());
+        $this->id = Mage::helper(('pb'))->CamelCase($attribute->getFrontendLabel());
         $this->name = $attribute->getFrontendLabel();
 
         $products = Mage::getModel('catalog/product')
@@ -32,12 +32,12 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Attribute
 
         foreach ($products as $product)
         {
-            array_push($this->collection,Mage::getModel('gator/Json_Product')->Hydrate($product));
+            array_push($this->collection,Mage::getModel('pb/Json_Product')->Hydrate($product));
         }
 
 
 
-        return Mage::helper('gator')->ConvertToJson($this,true);
+        return Mage::helper(('pb'))->ConvertToJson($this,true);
     }
 
 

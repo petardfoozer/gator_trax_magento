@@ -6,9 +6,9 @@
  * Time: 2:40 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Product
-    extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract
-    implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Product
+    extends Mainstreethost_ProductBuilder_Model_Json_Abstract
+    implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $name;
@@ -27,7 +27,7 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Product
         $this->name             = $product->getName();
         $this->description      = $product->getDescription();
         $this->imageFilePath    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
-        $this->profile          = Mage::getModel('gator/Json_Profile')->Hydrate(Mage::getModel('pc/profile')->LoadByAttributeValueId($product->getMshBoatModel()));
+        $this->profile          = Mage::getModel('pb/Json_Profile')->Hydrate(Mage::getModel('pc/profile')->LoadByAttributeValueId($product->getMshBoatModel()));
 
         
 

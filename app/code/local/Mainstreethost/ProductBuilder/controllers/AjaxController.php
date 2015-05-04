@@ -6,11 +6,11 @@
  * Time: 1:14 PM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_AjaxController extends Mage_Core_Controller_Front_Action
+class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_Front_Action
 {
     public function saveAction()
     {
         $post = $this->getRequest()->getParams();
-        Mage::helper('gator/Cart')->ClearCart();
+        Mage::helper('pb/Cart')->ClearCart();
     }
 }

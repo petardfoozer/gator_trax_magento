@@ -6,7 +6,7 @@
  * Time: 11:26 AM
  */
 
-class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Collection extends Mainstreethost_GatorTraxBoatBuilder_Model_Json_Abstract implements Mainstreethost_GatorTraxBoatBuilder_Model_Json_IAutojson
+class Mainstreethost_ProductBuilder_Model_Json_Collection extends Mainstreethost_ProductBuilder_Model_Json_Abstract implements Mainstreethost_ProductBuilder_Model_Json_IAutojson
 {
     private $id;
     private $name;
@@ -21,17 +21,17 @@ class Mainstreethost_GatorTraxBoatBuilder_Model_Json_Collection extends Mainstre
 
     public function Hydrate($option)
     {
-        $this->id       = Mage::helper('gator')->CamelCase($option->getName());
+        $this->id       = Mage::helper(('pb'))->CamelCase($option->getName());
         $this->name     = $option->getName();
 
 
         $i = 1;
         foreach($option->getOptions() as $attribute)
         {
-            //array_push($collection,Mage::getModel('gator/Json_Collection'));
+            //array_push($collection,Mage::getModel('pb/Json_Collection'));
         }
 
-        return Mage::helper('gator')->ConvertToJson($this);
+        return Mage::helper(('pb'))->ConvertToJson($this);
     }
 
 
