@@ -2,6 +2,161 @@
 $_products = $this->GetDependentProducts();
 $_profile = $this->_getProfile();
 ?>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="<?php echo Mage::getBaseUrl('skin'); ?>frontend/rwd/default/css/bootstrap-modals.css" rel="stylesheet">
+<script src="<?php echo Mage::getBaseUrl('js'); ?>config.js"></script>
+<script>
+    'use strict';
+
+    var app = angular.module('app', ['ui.bootstrap'])
+        .controller('RuleCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope)
+        {
+            $scope.rules                = [];
+            $scope.operators            = [{ name: "Has a" },{ name: "Has Not a" }];
+            $scope.sectionOption        = undefined;
+            $scope.attributeOption      = undefined;
+            $scope.operatorOption       = undefined;
+            $scope.valueOption          = undefined;
+            $scope.ids                  = $scope.id.split('-');
+            $scope.targetOptionValue    = {id: 1, name: "Hybrid Rake"}; // this should be driven by the option_value context
+
+
+
+
+            $scope.add = function()
+            {
+                $http({
+                    url: Config.defaultPath + 'index.php/boatbuilder/ajax/addrule',
+                    method: "POST",
+                    data: {
+                        profileId           : $scope.ids[0],
+                        optionId            : $scope.ids[1],
+                        optionValueId       : $scope.ids[2],
+                        operator            : $scope.operatorOption.name,
+                        targetEntityId      : $scope.sectionOption.id,
+                        targetOptionId      : $scope.attributeOption.id,
+                        targetOptionValueId : $scope.valueOption.id
+                    },
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+                })
+                    .success(function (data, status, headers) {
+                        if(data.status === 'success'){
+                            $scope.rules.push(
+                                {
+                                    section     : angular.copy($scope.sectionOption),
+                                    operator    : angular.copy($scope.operatorOption),
+                                    attribute   : angular.copy($scope.attributeOption),
+                                    value       : angular.copy($scope.valueOption),
+                                    id          : data.id
+                                });
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        console.log('error loading');
+                    });
+            };
+
+            $scope.removeListItem = function(item)
+            {
+                $http({
+                    url: Config.defaultPath + 'index.php/boatbuilder/ajax/removerule',
+                    method: "POST",
+                    data: {
+                        ruleId : item.id,
+                    },
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+                })
+                    .success(function (data, status, headers) {
+                        if(data.status === 'success'){
+                            var index = $scope.rules.indexOf(item);
+                            $scope.rules.splice(index, 1);
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        console.log('error loading');
+                    });
+            };
+
+            $http({
+                url: Config.defaultPath + 'index.php/boatbuilder/ajax/rules',
+                method: "POST",
+                data: {
+                    profileId       : $scope.ids[0],
+                    optionId        : $scope.ids[1],
+                    optionValueId   : $scope.ids[2]
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                }
+            })
+                .success(function (data, status, headers) {
+                    $scope.sections = data;
+
+                    for(var i = 0; i < $scope.sections.length; i++)
+                    {
+                        if($scope.sections[i].id == $scope.ids[3])
+                        {
+                            for(var j = 0; j < $scope.sections[i].attributes.length; j++)
+                            {
+                                if($scope.sections[i].attributes[j].id == $scope.ids[1])
+                                {
+                                    for(var k = 0; k < $scope.sections[i].attributes[j].values.length; k++)
+                                    {
+                                        if($scope.sections[i].attributes[j].values[k].id == $scope.ids[2])
+                                        {
+                                            $scope.rules = $scope.sections[i].attributes[j].values[k].rules;
+                                            $scope.title = $scope.sections[i].attributes[j].values[k].name + ' ' + $scope.sections[i].attributes[j].name;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('error loading');
+                });
+
+
+
+
+        }])
+
+        .controller('ModalCtrl', function ($scope, $modal, $log) {
+
+            $scope.open = function (id) {
+                var scope = $scope.$new();
+                scope.id = id;
+                var modalInstance = $modal.open({
+                    templateUrl: 'ruleBuilder.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: 'lg',
+                    scope: scope
+                });
+            };
+        })
+
+        .controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+
+            $scope.done = function () {
+                $modalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        });
+
+</script>
+<div ng-controller="ModalCtrl" ng-app="app">
 <div class="entry-edit">
 <form id="<?php echo $this->getForm()->getId() ?>" action="<?php echo $this->getForm()->getAction() ?>" method="<?php echo strtoupper($this->getForm()->getMethod()) ?>">
     <input type="hidden" id="form_key" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
@@ -37,7 +192,7 @@ $_profile = $this->_getProfile();
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="#">Manage Rules</a>
+                                        <a ng-click="open('<?php echo $_profile->getProfileId() . '-' . $_option->getOptionId() . '-' . $_value->getOptionTypeId() . '-' . $_product->getEntityId() ?>')">Manage Rules</a>
                                     </div>
                                  </li>
                              <?php endforeach;?>
@@ -48,6 +203,40 @@ $_profile = $this->_getProfile();
         </fieldset>
     <?php endforeach;?>
 </form>
+</div>
+<div>
+    <script type="text/ng-template" id="ruleBuilder.html">
+        <div class="rule-list" ng-controller="RuleCtrl">
+
+            <h3 ng-bind="title"></h3>
+            <div ng-hide="sections.length"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+
+            <select ng-show="sections.length" ng-model="sectionOption" ng-options="section.name for section in sections"><option value="">--Select an option--</option></select>
+            <select ng-show="sectionOption" ng-model="operatorOption" ng-options="operator.name for operator in operators"></select>
+            <select ng-show="operatorOption" ng-model="attributeOption" ng-options="att.name for att in sectionOption.attributes"></select>
+            <select ng-show="attributeOption" ng-model="valueOption" ng-options="val.name for val in attributeOption.values"></select>
+            <button ng-show="sectionOption && operatorOption && attributeOption&& valueOption" ng-click="add()">Add</button>
+            <div ng-show="rules.length" style="margin-top:10px;">
+                <h4>{{title}} will be offered as an option if:</h4>
+                <ul>
+                    <li ng-repeat="rule in rules">
+                        <div class="output">
+                            <span>{{rule.section.name}}</span>
+                            <span class="operator">{{rule.operator.name}}</span>
+                            <span class="bold">{{rule.attribute.name}}</span>
+                            selection of
+                            <span class="bold">{{rule.value.name}}</span>
+                            <a href="#" ng-click="removeListItem(rule)">remove</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="done()">Done</button>
+        </div>
+    </script>
+</div>
 </div>
 <script>
     var ajax = {};
@@ -191,3 +380,5 @@ $_profile = $this->_getProfile();
         document.getElementById('<?php echo $this->getDestElementId()?>').submit();
     };
 </script>
+
+

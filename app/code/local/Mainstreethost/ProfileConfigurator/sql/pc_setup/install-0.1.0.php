@@ -59,7 +59,10 @@ $profilesTable->addColumn(
 );
 $profilesTable->setOption('type','InnoDB');
 $profilesTable->setOption('charset','utf8');
-$this->getConnection()->createTable($profilesTable);
+if ($this->getConnection()->isTableExists($this->getTable('pc/profile')) != true) {
+    $this->getConnection()->createTable($profilesTable);
+}
+
 //endregion
 //region configs table
 $configsTable = new Varien_Db_Ddl_Table();
@@ -126,7 +129,9 @@ $configsTable->addColumn(
 );
 $configsTable->setOption('type','InnoDB');
 $configsTable->setOption('charset','utf8');
-$this->getConnection()->createTable($configsTable);
+if ($this->getConnection()->isTableExists($this->getTable('pc/configuration')) != true) {
+    $this->getConnection()->createTable($configsTable);
+}
 
 $rulesTable = new Varien_Db_Ddl_Table();
 $rulesTable->setName($this->getTable('pc/rule'));
@@ -152,8 +157,9 @@ $rulesTable->addColumn(
         'primary' => true
     )
 );
+
 $rulesTable->addColumn(
-    'configuration_id',
+    'option_id',
     Varien_Db_Ddl_Table::TYPE_INTEGER,
     10,
     array(
@@ -163,6 +169,7 @@ $rulesTable->addColumn(
         'primary' => false
     )
 );
+
 $rulesTable->addColumn(
     'option_value_id',
     Varien_Db_Ddl_Table::TYPE_INTEGER,
@@ -176,7 +183,19 @@ $rulesTable->addColumn(
 );
 $rulesTable->addColumn(
     'operator',
-    Varien_Db_Ddl_Table::TYPE_VARCHAR,
+    Varien_Db_Ddl_Table::TYPE_TEXT,
+    null,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
+    )
+);
+
+$rulesTable->addColumn(
+    'target_entity_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
     10,
     array(
         'auto_increment' => false,
@@ -185,6 +204,28 @@ $rulesTable->addColumn(
         'primary' => false
     )
 );
+
+$rulesTable->addColumn(
+    'created_at',
+    Varien_Db_Ddl_Table::TYPE_TEXT,
+    null,
+    array(
+        'nullable' => false,
+    )
+);
+
+$rulesTable->addColumn(
+    'target_option_id',
+    Varien_Db_Ddl_Table::TYPE_INTEGER,
+    10,
+    array(
+        'auto_increment' => false,
+        'unsigned' => true,
+        'nullable'=> false,
+        'primary' => false
+    )
+);
+
 $rulesTable->addColumn(
     'target_option_value_id',
     Varien_Db_Ddl_Table::TYPE_INTEGER,
@@ -207,7 +248,10 @@ $rulesTable->addColumn(
 );
 $rulesTable->setOption('type','InnoDB');
 $rulesTable->setOption('charset','utf8');
-$this->getConnection()->createTable($rulesTable);
+if ($this->getConnection()->isTableExists($this->getTable('pc/rule')) != true) {
+    $this->getConnection()->createTable($rulesTable);
+}
+
 
 
 

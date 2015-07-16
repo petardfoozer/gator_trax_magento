@@ -7,6 +7,7 @@
  */ 
 class Mainstreethost_ProductBuilder_Helper_Data extends Mage_Core_Helper_Abstract
 {
+//region json
     //http://www.mendoweb.be/blog/php-convert-string-to-camelcase-string/
     public function CamelCase($str, array $noStrip = [])
     {
@@ -21,7 +22,6 @@ class Mainstreethost_ProductBuilder_Helper_Data extends Mage_Core_Helper_Abstrac
         return $str;
     }
 
-
     public function ConvertToJson($data,$pretty = FALSE)
     {
         if($pretty)
@@ -31,6 +31,19 @@ class Mainstreethost_ProductBuilder_Helper_Data extends Mage_Core_Helper_Abstrac
 
         return json_encode($data);
     }
+
+    public function jsonSerialize($data)
+    {
+        $returnArray = array();
+
+        foreach ((new ReflectionClass($data))->getProperties() as $property)
+        {
+            $returnArray[$property->getName()] = $data->get($property->getName());
+        }
+
+        return $returnArray;
+    }
+    //end region
 
 
 
@@ -217,4 +230,22 @@ class Mainstreethost_ProductBuilder_Helper_Data extends Mage_Core_Helper_Abstrac
     {
         return (int)Mage::getModel('catalog/product_option_value')->load($optionValueId)->getOptionId();
     }
+
+
+    public function GetProductOptions($product)
+    {
+        $options = array();
+        Mage::getSingleton('catalog/product_option')->unsetOptions();
+        $product = Mage::getModel('catalog/product')->load($product->getEntityId());
+
+        if($product->getHasOptions())
+        {
+            Mage::getSingleton('catalog/product_option')->unsetData();
+            Mage::getSingleton('catalog/product_option')->unsetOldData();
+            $options = $product->getOptions();
+        }
+
+        return $options;
+    }
+
 }
