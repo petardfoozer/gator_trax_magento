@@ -13,7 +13,10 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         $post = $this->getRequest()->getParams();
         Mage::helper('pb/Cart')->ClearCart();
     }
-    
+
+    public function indexAction(){
+        echo "This is the index action";
+    }
     
     
     
