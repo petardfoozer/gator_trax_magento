@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+<default>
+        <reference name="right">
+            <block type="cms/block" name="boat-builder-link" before="-">
+                <action method="setBlockId"><block_id>boat_builder_link</block_id></action>
+            </block>
+			<block type="cms/block" name="warranty-link" after="boat-builder-link">
+                <action method="setBlockId"><block_id>warranty_link</block_id></action>
+            </block> 
+			<remove name="catalog.compare.sidebar" />      
+        </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/angular/angular.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/bootstrap/ui-bootstrap-tpls-0.12.0.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/js/config.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/angular-route/angular-route.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/angular-animate/angular-animate.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/angular-ui-router/release/angular-ui-router.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/bower_components/pouchdb/dist/pouchdb.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/app.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/js/controllers.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/scoreboard/scoreboard.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/deck/deck.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/look/look.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/electrical/electrical.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/flooring/flooring.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/fuelTank/fuelTank.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/accessories/accessories.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/trailer/trailer.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/seatsRacksBrackets/seatsRacksBrackets.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/boatModel/boatModel.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/hullSize/hullSize.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/motor/motor.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/interior/interior.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/app/modules/saveForLater/saveForLater.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/app/css/app.css</name></action>
+        </reference>
+</default>
+
+	<contacts_index_index >
+
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+
+    </contacts_index_index>
+
+</layout>

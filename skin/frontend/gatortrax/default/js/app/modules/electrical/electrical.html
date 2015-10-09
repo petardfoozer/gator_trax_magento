@@ -1,0 +1,18 @@
+<div class="container" ng-controller="ElectricalCtrl">
+        <div id="tabs" class="tabs" ng-model="electrical">
+            <tabset>
+                <tab ng-repeat="item in electrical.products.products" heading="{{item.name}}" ng-model="item" active="item.active" disable="item.disabled">
+                    <div class="non-scrollable-container">
+                        <div class="group-box" ng-repeat="option in item.product_options">
+                            <div class="left">
+                                <input type="radio" name="option" ng-model="product_options" ng-value="option"/> {{option.name}}
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    <div class="submitBtn">
+        <button ng-click="section.SaveAndNext(electrical, $event)">Next</button>
+    </div>
+</div>

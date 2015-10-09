@@ -1,0 +1,36 @@
+<div class="container" ng-controller="HullSizeCtrl">
+    <div class="formContent left">
+        <div class="left group-box">
+            <label for="thickness">{{thickness.name}}</label>
+            <select id="thickness" 
+                    ng-options="item.name for item in thickness.values | filter: {active: true} track by item.id" 
+                    ng-model="thickness.selected"></select>
+        </div>
+        <div class="left group-box">
+            <label for="rake">{{rake.name}}</label>
+            <select id="rake" ng-options="item.name for item in rake.values track by item.id | filter: {item.active: true}" 
+                    ng-model="rake.selected"></select>
+        </div>
+        <div class="left group-box">
+            <label for="huntdeck">{{huntdeck.name}}</label>
+            <select id="huntdeck" ng-options="item.name for item in huntdeck.values track by item.id | filter: {item.active: true}" 
+                    ng-model="huntdeck.selected"></select>
+        </div>
+        
+        <div id="tabs">
+            <tabset>
+                <tab ng-repeat="tab in tabs" heading="{{tab.title | uppercase}}" active="tab.active" disable="tab.disabled" ng-click="SaveTab(tab, $event)">
+                    <div class="non-scrollable-container">
+                        <div class="group-box">
+                            <div class="left">
+                                <select id="side" ng-options="item.name for item in tab.side.values track by item.id | filter: {active: true}" ng-model="tab.side.selected"></select> {{tab.side.name | lowercase}} with 
+                                <select id="transom" ng-options="item.name for item in tab.side.transom.values track by item.id | filter: {active: true}" ng-model="tab.side.transom.selected"></select> in. transom x {{tab.value}} in. bottom
+                            </div>
+                        </div>
+                    </div>
+                    <button ng-click="SaveTabAndNext(tab, $event)">Next</button>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>
