@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html ng-app="app">
+    <head>
+        <title>POC - Rules</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .output span {
+                display: inline-block;
+                border: 0.025em #999999 solid;
+                padding: 3px 5px;
+                margin: 5px;
+            }
+            
+            .operator {
+                background: #E6E5D8;
+            }
+            
+            .rule-list {
+                margin: 2em;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-controller="ModalCtrl">
+            <script type="text/ng-template" id="ruleBuilder.html">
+                <div class="rule-list" ng-controller="RuleCtrl">
+            
+                    <h3>{{targetOptionValue.name}}</h3>
+                    <select ng-model="sectionOption" ng-options="section.name for section in sections | filter:{ id: '!boatModel'}"><option value="">--Select an option--</option></select> 
+                    <select ng-model="operatorOption" ng-options="operator.name for operator in operators"></select>
+                    <select ng-model="attributeOption" ng-options="att.name for att in sectionOption.attributes"></select> 
+                    <select ng-model="valueOption" ng-options="val.name for val in attributeOption.values"></select> 
+                    <button ng-click="add()">add</button>
+                    <div>
+                        <ul>
+                            <li ng-repeat="rule in rules">
+                                <div class="output">
+                                    <a href="#" ng-click="removeListItem(rule)">remove</a> 
+                                    <span class="operator">{{rule.operator.name}}</span> 
+                                    <span>{{rule.section.name}}</span> 
+                                    <span>{{rule.attribute.name}}</span> 
+                                    <span>{{rule.value.name}}</span> 
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="done()">Done</button>
+                </div>
+            </script>
+
+            <button class="btn btn-default" ng-click="open()">Rules</button>
+        </div>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+        <script>
+            'use strict';
+            
+            var app = angular.module('app', ['ui.bootstrap'])
+            .controller('RuleCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) 
+            {
+                $scope.rules            = [];
+                $scope.operators        = [{ name: "Has a" },{ name: "Has Not a" }];
+                $scope.sectionOption    = undefined;
+                $scope.attributeOption  = undefined;
+                $scope.operatorOption   = undefined;
+                $scope.valueOption      = undefined;
+                
+                $scope.targetOptionValue  = {id: 1, name: "Hybrid Rake"}; // this should be driven by the option_value context
+                
+                $scope.add = function()
+                {   
+                    $scope.rules.push(
+                    {
+                        section:     angular.copy($scope.sectionOption),
+                        operator:    angular.copy($scope.operatorOption),
+                        attribute:   angular.copy($scope.attributeOption),
+                        value:       angular.copy($scope.valueOption)
+                    });
+                    
+                    // ajax call to add 
+                };
+                
+                $scope.removeListItem = function(item) 
+                { 
+                    var index = $scope.rules.indexOf(item);
+                    $scope.rules.splice(index, 1);     
+                    
+                    // ajax call to remove
+                };
+                
+                $scope.sections = [
+                    
+                    // should be populated with an ajax call on "rules" click
+                {
+                    id:"boatModel", 
+                    name:"Boat Model",
+                    collection: 
+                    [
+                        {
+                            id: "gt",
+                            name: "GT",
+                            attributes: 
+                            [
+                                {
+                                    id: "",
+                                    name: "Description",
+                                    values: [
+                                        {
+                                            value: "This boat model has a description, here's the proof.",
+                                            rules: []
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "",
+                                    name: "Image",
+                                    values: [
+                                        {
+                                            value: "/path/to/the/img.jpg",
+                                            rules: []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            attributes: 
+                            [
+                                {
+                                    id: "",
+                                    name: "Title",
+                                    values: [
+                                        {
+                                            name: "Gt Model",
+                                            rules: []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id:"hullSize", 
+                    name:"Hull Size",
+                    attributes: 
+                    [
+                        {
+                            id: 10,
+                            name: "Bottoms",
+                            values: [
+                                {
+                                    id: 11,
+                                    name: "Bottom 38 in.",
+                                    rules: []
+                                },
+                                {
+                                    id: 12,
+                                    name: "Bottom 44 in.",
+                                    rules: []
+                                },
+                                {
+                                    id: 13,
+                                    name: "Bottom 50 in.",
+                                    rules: []
+                                },
+                                {
+                                    id: 14,
+                                    name: "Bottom 55 in.",
+                                    rules: []
+                                }
+                            ]
+                        },
+                        {
+                            id: 20,
+                            name: "Transom",
+                            values: [
+                                {
+                                    id: 21,
+                                    name: "14",
+                                    rules: []
+                                },
+                                {
+                                    id: 22,
+                                    name: "15",
+                                    rules: []
+                                },
+                                {
+                                    id: 23,
+                                    name: "16",
+                                    rules: []
+                                },
+                                {
+                                    id: 24,
+                                    name: "17",
+                                    rules: []
+                                }
+                            ]
+                        },
+                        {
+                            id: 30,
+                            name: "Side",
+                            values: [
+                                {
+                                    id: 31,
+                                    name: '15"',
+                                    rules: []
+                                },
+                                {
+                                    id: 32,
+                                    name: '18"',
+                                    rules: []
+                                },
+                                {
+                                    id: 33,
+                                    name: '19"',
+                                    rules: []
+                                },
+                                {
+                                    id: 34,
+                                    name: '21"',
+                                    rules: []
+                                }
+                            ]
+                        },
+                        {
+                            id: 40,
+                            name: "Thickness",
+                            values: [
+                                {
+                                    id: 41,
+                                    name: '0.125"',
+                                    rules: []
+                                },
+                                {
+                                    id: 42,
+                                    name: '0.19"',
+                                    rules: []
+                                }
+                            ]
+                        },
+                        {
+                            id: 50,
+                            name: "Huntdeck",
+                            values: [
+                                {
+                                    id: 51,
+                                    name: "Yes",
+                                    rules: []
+                                },
+                                {
+                                    id: 52,
+                                    name: "No",
+                                    rules: []
+                                }
+                            ]
+                        },
+                        {
+                            id: 60,
+                            name: "Hybrid Rake",
+                            values: [
+                                {
+                                    id: 61,
+                                    name: "Yes",
+                                    rules: []
+                                },
+                                {
+                                    id: 62,
+                                    name: "No",
+                                    rules: []
+                                }
+                            ]
+                        }
+                    ]
+                }];
+            }])
+            
+            .controller('ModalCtrl', function ($scope, $modal, $log) {
+
+                $scope.open = function (size) {
+
+                    var modalInstance = $modal.open({
+                        templateUrl: 'ruleBuilder.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: size
+                    });
+                };
+            })
+
+            .controller('ModalInstanceCtrl', function ($scope, $modalInstance) {
+
+                  $scope.done = function () {
+                      $modalInstance.close();
+                  };
+
+                  $scope.cancel = function () {
+                      $modalInstance.dismiss('cancel');
+                  };
+            });
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<div class="container" ng-controller="BoatModelCtrl">
+    
+    <div class="formContent left" ng-repeat="boat in boats">
+        <div>
+            <fieldset>
+                <legend>{{boat.name}}</legend>
+                <div class="boatThumb">
+                    <img ng-src="{{boat.image}}" alt="{{boat.desc}}" />
+                </div>
+                <div>
+                    {{boat.shortDesc}}
+                </div>
+                <div class="description">
+                    <p>{{boat.description}}</p>
+                    <button ng-click="section.SaveAndNext(boat, $event)">Select</button>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+

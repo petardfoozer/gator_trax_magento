@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <boatbuildersettings translate="label" module="pb">
+            <label>Boat Builder</label>
+            <sort_order>9999998</sort_order>
+        </boatbuildersettings>
+    </tabs>
+    <sections>
+        <boatbuildersettings translate="label" module="pb">
+            <tab>boatbuildersettings</tab>
+            <label>Settings</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>9999999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <boatbuildersettingsgroup translate="label" module="pb">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <boatbuildercmspage translate="label" module="pb">
+                            <label>Boat Builder CMS Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>pb/system_config_source_cmspages</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boatbuildercmspage>
+                    </fields>
+                </boatbuildersettingsgroup>
+            </groups>
+        </boatbuildersettings>
+    </sections>
+</config>

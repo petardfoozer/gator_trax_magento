@@ -1,0 +1,18 @@
+<div class="container" ng-controller="SeatsCtrl">
+    <div id="tabs" class="tabs">
+        <tabset>
+            <tab ng-repeat="item in seatsRacksAndBrackets.products.products" heading="{{item.name}}" ng-model="item" active="item.active" disable="item.disabled">
+                <div class="non-scrollable-container">
+                    <div class="group-box" ng-repeat="option in item.product_options">
+                        <div class="left">
+                            <input type="radio" name="option" ng-mode="option.id" ng-value="option.type"/>{{option.name}}
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+    <div class="submitBtn">
+        <button ng-click="section.SaveAndNext(seatsRacksAndBrackets, $event)">Next</button>
+    </div>
+</div>

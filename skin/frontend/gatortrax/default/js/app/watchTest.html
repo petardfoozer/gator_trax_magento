@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="app">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <div ng-controller="myCtrl">
+            <div ng-repeat="section in sections">
+                Name: {{section.name}}<br/>
+                Id: {{section.id}}
+            </div>
+            <button ng-click="update()">Click Me</button>
+            <div>
+                {{sections}}
+            </div>
+        </div>
+        
+        <script src="../bower_components/angular/angular.js"></script>
+        <script type="text/javascript">
+            var app = angular.module('app', [])
+            .controller('myCtrl', ['$scope', function($scope) 
+            {
+                $scope.sections = 
+                [
+                    {
+                        id: 0,
+                        name: ''
+                    },
+                    {
+                        id: 1,
+                        name: ''
+                    },
+                    {
+                        id: 2,
+                        name: ''
+                    }
+                ];
+                
+                $scope.update = function()
+                {
+                    $scope.sections.push({id: $scope.sections.length, name: ''});
+                };
+                
+                $scope.$watchCollection('sections', function(oldVal, newVal)
+                {
+                    for (var i = 0; i < $scope.sections.length; i++)
+                    {
+                        $scope.sections[i].name = "Section " + i;
+                    }
+                });
+            }]);
+    
+        </script>
+    </body>
+</html>
