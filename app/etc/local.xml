@@ -42,8 +42,8 @@
                 <connection>
                     <host><![CDATA[localhost]]></host>
                     <username><![CDATA[root]]></username>
-                    <password><![CDATA[K76kRN34]]></password>
-                    <dbname><![CDATA[gator_trax_magento]]></dbname>
+                    <password><![CDATA[uN36htdv]]></password>
+                    <dbname><![CDATA[gator]]></dbname>
                     <port><![CDATA[3307]]></port>
                     <active>1</active>
                 </connection>

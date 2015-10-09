@@ -8,12 +8,6 @@
 
 class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_Front_Action
 {
-
-    public function indexAction()
-    {
-        echo "This is the mother fucking controller";
-    }
-
     public function saveAction()
     {
         $post = $this->getRequest()->getParams();
