@@ -28,8 +28,6 @@ angular.module('wizard.boatModel', ['ui.router'])
         {
             data[i].image = Config.prodThumImgPath + data[i].image;
         }
-        console.log(data);
-        
         $scope.boats = data;
     })
     .error(function(data, status, headers, config) 

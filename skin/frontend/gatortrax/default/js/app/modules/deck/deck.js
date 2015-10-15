@@ -22,7 +22,7 @@ angular.module('wizard.deck', ['ui.router'])
 {
     $scope.deck_style    = {};
 
-    $http.get(Config.defaultPath + 'mock/getDeckData.php')
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatdeck')
     .success(function(data, status, headers)
     {
         $scope.deck_style = data;

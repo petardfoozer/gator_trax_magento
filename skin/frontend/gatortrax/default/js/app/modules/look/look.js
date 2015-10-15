@@ -22,9 +22,10 @@ angular.module('wizard.look', ['ui.router'])
 {
     $scope.looks = {};
 
-    $http.get(Config.defaultPath + 'mock/getLookData.php')
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatlook')
     .success(function(data, status, headers)
     {
+        console.log(data);
         $scope.looks = data;
     })
     .error(function(data, status, headers, config)

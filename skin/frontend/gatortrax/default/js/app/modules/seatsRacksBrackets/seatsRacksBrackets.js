@@ -22,7 +22,7 @@ angular.module('wizard.seatsRacksBrackets', ['ui.router'])
         $scope.data = {};
         $scope.seatsRacksAndBrackets = [];
 
-        $http.get(Config.defaultPath + 'mock/getSeatsRacksBracketsData.php')
+        $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatseats')
             .success(function(data, status, headers)
             {
                 $scope.data = data;

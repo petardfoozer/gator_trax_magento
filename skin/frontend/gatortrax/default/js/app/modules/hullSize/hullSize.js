@@ -30,7 +30,7 @@ angular.module('wizard.hullSize', ['ui.router'])
     $scope.transom          = {};
 
             // Let's get the hull data
-    $http.get(Config.defaultPath + 'mock/getHullData.php') 
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boathull')
     .success(function(data, status, headers)
     {
         $scope.bottoms      = data.bottoms;

@@ -25,7 +25,7 @@ angular.module('wizard.motor', ['ui.router'])
     $scope.steering = {};
     
     
-    $http.get(Config.defaultPath + 'mock/getMotorData.php') 
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatmotor')
     .success(function(data, status, headers)
     {
         $scope.motorData = data;

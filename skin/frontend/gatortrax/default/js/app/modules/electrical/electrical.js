@@ -22,7 +22,7 @@ angular.module('wizard.electrical', ['ui.router'])
 {
     $scope.electrical   = [];
 
-    $http.get(Config.defaultPath + 'mock/getElectricalData.php')
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatelectical')
     .success(function(data, status, headers)
     {
         $scope.electrical = data;

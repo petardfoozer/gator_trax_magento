@@ -24,7 +24,7 @@ angular.module('wizard.interior', ['ui.router'])
     $scope.interior = [];
     $scope.accessories = [];
     
-    $http.get(Config.defaultPath + 'mock/getInteriorData.php') 
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatinterior')
     .success(function(data, status, headers)
     {
         $scope.data = data;

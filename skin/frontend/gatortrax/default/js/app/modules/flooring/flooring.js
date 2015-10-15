@@ -22,7 +22,7 @@ angular.module('wizard.flooring', ['ui.router'])
 {
     $scope.flooring     = [];
 
-    $http.get(Config.defaultPath + 'mock/getFlooringData.php')
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatflooring')
     .success(function(data, status, headers)
     {
         $scope.flooring = data;

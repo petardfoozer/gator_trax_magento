@@ -22,7 +22,7 @@ angular.module('wizard.trailer', ['ui.router'])
     {
         $scope.trailer = {};
 
-        $http.get(Config.defaultPath + 'mock/getTrailerData.php')
+        $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boattrailer')
             .success(function(data, status, headers)
             {
                 $scope.trailer = data;

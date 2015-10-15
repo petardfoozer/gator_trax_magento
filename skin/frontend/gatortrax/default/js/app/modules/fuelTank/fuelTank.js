@@ -22,7 +22,7 @@ angular.module('wizard.fuelTank', ['ui.router'])
     {
         $scope.fuelTank    = [];
 
-        $http.get(Config.defaultPath + 'mock/getFuelTankData.php')
+        $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatfuel')
             .success(function(data, status, headers)
             {
                 $scope.fuelTank = data;

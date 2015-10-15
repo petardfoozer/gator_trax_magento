@@ -52,12 +52,10 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
     
     public function boathullAction()
     {
-        $boatHullAttr = 'msh_boat_hull_part';
-
         $hullProducts = Mage::getModel('catalog/product')
             ->getCollection()
             ->addAttributeToSelect('*')
-            ->addFieldToFilter($boatHullAttr, array('like' => '%%'))
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
             ->load()
             ->getItems();
 
@@ -165,7 +163,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boatelectricalAction()
+    public function boatectricalAction()
     {
         $electricalProducts = Mage::getModel('catalog/product')
             ->getCollection()
@@ -193,7 +191,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boatelflooringAction()
+    public function boatflooringAction()
     {
         $flooringProducts = Mage::getModel('catalog/product')
             ->getCollection()
@@ -226,7 +224,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         $boatLookProducts = Mage::getModel('catalog/product')
             ->getCollection()
             ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, 'Look')
+            ->addAttributeToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like'=>'%%'))
             ->load()
             ->getItems();
 
@@ -243,11 +241,10 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
                 "active" => ($boatLookProduct->getStatus() === "2" ? false : true)
             );
         }
-
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boatelfuelAction()
+    public function boatfuelAction()
     {
         $fuelProducts = Mage::getModel('catalog/product')
             ->getCollection()
@@ -275,7 +272,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boateltrailerAction()
+    public function boattrailerAction()
     {
         $trailerProducts = Mage::getModel('catalog/product')
             ->getCollection()
@@ -303,7 +300,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boatelseatsAction()
+    public function boatseatsAction()
     {
         $seatProducts = Mage::getModel('catalog/product')
             ->getCollection()
@@ -331,7 +328,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         echo Mage::helper('pb')->ConvertToJson($return);
     }
 
-    public function boatelaccessoriesAction()
+    public function boataccessoriesAction()
     {
         $accessoriesProducts = Mage::getModel('catalog/product')
             ->getCollection()

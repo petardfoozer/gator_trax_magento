@@ -23,7 +23,7 @@ angular.module('wizard.accessories', ['ui.router'])
     $scope.accessories  = [];
     $scope.product_options = [];
 
-    $http.get(Config.defaultPath + 'mock/getAccessoriesData.php')
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boataccessories')
     .success(function(data, status, headers)
     {
         $scope.accessories = data;
