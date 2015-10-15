@@ -80,8 +80,8 @@ var app = angular.module('wizard',
 
 },{}],2:[function(require,module,exports){
 window.Config = {
-    defaultPath: "http://pcageaodev.mainstreethost.net/gator_trax_angular/app/",
-    prodThumImgPath: "http://pcageaodev.mainstreethost.net/gator_trax_angular/app/img/",
+    defaultPath: window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1] + "/",
+    prodThumImgPath: window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1] + "/",
     transomDetails: " X 38 in. " 
 };
 },{}],3:[function(require,module,exports){

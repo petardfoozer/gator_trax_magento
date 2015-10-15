@@ -21,13 +21,14 @@ angular.module('wizard.boatModel', ['ui.router'])
 .controller('BoatModelCtrl', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) 
 {
     $scope.boats = [];
-    $http.get(Config.defaultPath + 'mock/getBoatData.php') 
+    $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatmodels')
     .success(function(data, status, headers)
     {
         for (var i=0; i < data.length; i++)
         {
             data[i].image = Config.prodThumImgPath + data[i].image;
         }
+        console.log(data);
         
         $scope.boats = data;
     })

@@ -1,13 +1,8 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-<<<<<<< HEAD:app/etc/modules/Mainstreethost_GatorTraxBoatBuilder.xml
-        <Mainstreethost_GatorTraxBoatBuilder>
-            <active>false</active>
-=======
         <Mainstreethost_ProductBuilder>
             <active>true</active>
->>>>>>> 2c4e4bfe5574a8c8e4031221a662f4445c035056:app/etc/modules/Mainstreethost_ProductBuilder.xml
             <codePool>local</codePool>
         </Mainstreethost_ProductBuilder>
     </modules>

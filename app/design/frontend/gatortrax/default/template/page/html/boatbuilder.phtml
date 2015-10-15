@@ -9,18 +9,9 @@
     <title>Gator Trax - Boat Builder Wizard</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <link rel="stylesheet" href="skin/frontend/rwd/default/js/bower_components/html5-boilerplate/css/normalize.css">-->
-<!--    <link rel="stylesheet" href="skin/frontend/rwd/default/js/bower_components/html5-boilerplate/css/main.css">-->
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-<!--    <link rel="stylesheet" href="css/app.css"/>-->
     <link href='http://fonts.googleapis.com/css?family=Bevan|Open+Sans:400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
 </head>
 <body ng-cloak class="ng-cloak">
-
-<!--    <ul class="nav">
-        <li ui-sref-active="active"><a class="brand" ui-sref="home">Home</a></li>
-        <li ui-sref-active="active"><a class="brand" ui-sref="boatModel">Model</a></li>
-    </ul>-->
 
 
 <div ng-controller="ScoreboardCtrl">
@@ -28,7 +19,7 @@
     <script type="text/javascript">
         function getStuff()
         {
-            jQuery.get("boatbuilder/ajax/save", function(data){
+            jQuery.get("boatbuilder/ajax/boatlook", function(data){
                 console.log(data);
             });
         }
@@ -52,32 +43,5 @@
         Submit for Quote
     </button>
 </div>
-
-<!--<script src="js/config.js"></script>-->
-
-<!--<script src="../bower_components/angular/angular.js"></script>-->
-<!--<script src="../bower_components/angular-route/angular-route.min.js"></script>-->
-<!--<script src="../bower_components/angular-animate/angular-animate.min.js"></script>-->
-<!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>-->
-<!--<script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>-->
-<!--<script src="../bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>-->
-<!--<script src="../bower_components/pouchdb/dist/pouchdb.min.js"></script>-->
-
-<!--<script src="app.js"></script>-->
-<!--<script src="js/controllers.js"></script>-->
-<!--<script src="modules/scoreboard/scoreboard.js"></script>-->
-<!--<script src="modules/deck/deck.js"></script>-->
-<!--<script src="modules/look/look.js"></script>-->
-<!--<script src="modules/electrical/electrical.js"></script>-->
-<!--<script src="modules/flooring/flooring.js"></script>-->
-<!--<script src="modules/fuelTank/fuelTank.js"></script>-->
-<!--<script src="modules/accessories/accessories.js"></script>-->
-<!--<script src="modules/trailer/trailer.js"></script>-->
-<!--<script src="modules/seatsRacksBrackets/seatsRacksBrackets.js"></script>-->
-<!--<script src="modules/boatModel/boatModel.js"></script>-->
-<!--<script src="modules/hullSize/hullSize.js"></script>-->
-<!--<script src="modules/motor/motor.js"></script>-->
-<!--<script src="modules/interior/interior.js"></script>-->
-<!--<script src="modules/saveForLater/saveForLater.js"></script>-->
 </body>
 </html>
