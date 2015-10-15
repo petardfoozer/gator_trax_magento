@@ -28,9 +28,9 @@ angular.module('wizard.hullSize', ['ui.router'])
     $scope.thickness        = {};
     $scope.huntdeck         = {};
     $scope.transom          = {};
-    
 
-    $http.get(Config.defaultPath + 'mock/getHullData.php')
+            // Let's get the hull data
+    $http.get(Config.defaultPath + 'mock/getHullData.php') 
     .success(function(data, status, headers)
     {
         $scope.bottoms      = data.bottoms;
@@ -46,7 +46,6 @@ angular.module('wizard.hullSize', ['ui.router'])
                 value: elt.value,
                 attributes: elt.attributes
             };
-
                     // dynamically creating properties to support unknown attributes
             $scope.targetFields.forEach(function(target)
             {
