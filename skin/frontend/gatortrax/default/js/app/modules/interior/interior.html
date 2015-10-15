@@ -1,0 +1,17 @@
+<div class="container" ng-controller="InteriorCtrl">
+    <div id="tabs" class="tabs">
+        <div class="left group-box">
+            <center><label for="starboard" id="pickBoxes">Pick your boxes</label></center>
+            <div class="interior-left" ng-repeat="option in interior.positions.types" ng-model="interior.positions.selected">
+                <div class="group-box" ng-repeat="box in option.boxes">
+                    <input type="checkbox" ng-model="boxes.selected" name="boxes" ng-value="boxes">{{box.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submitBtn">
+        <button ng-click="section.SaveAndNext(interior, $event)">Next</button>
+    </div>
+    <img src="http://pcageaodev.mainstreethost.net/gator_trax_magento/skin/frontend/rwd/default/js/images/gt5.jpg">
+</div>
+

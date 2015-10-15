@@ -8,14 +8,14 @@
 
 class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_Front_Action
 {
+
+    const BOAT_ATTRIBUTE = 'msh_boat_part_identifier';
+
     public function saveAction()
     {
         $post = $this->getRequest()->getParams();
         Mage::helper('pb/Cart')->ClearCart();
     }
-    
-    
-    
     
     public function boatmodelsAction()
     {
@@ -53,12 +53,312 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
     
     public function boathullAction()
     {
-        
+        $boatHullAttr = 'msh_boat_hull_part';
+
+        $hullProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter($boatHullAttr, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($hullProducts as $hullProduct)
+        {
+            $return[] = array(
+                "id" => (int)$hullProduct->getEntityId(),
+                "name" => $hullProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $hullProduct->getShortDescription(),
+                "image" => $urlPrepend . $hullProduct->getSmallImage(),
+                "desc" => $hullProduct->getDescription(),
+                "active" => ($hullProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
     }
-    
 
+    public function boatmotorAction()
+    {
 
+        $motorProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
 
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($motorProducts as $motorProduct)
+        {
+            $return[] = array(
+                "id" => (int)$motorProduct->getEntityId(),
+                "name" => $motorProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $motorProduct->getShortDescription(),
+                "image" => $urlPrepend . $motorProduct->getSmallImage(),
+                "desc" => $motorProduct->getDescription(),
+                "active" => ($motorProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatinteriorAction()
+    {
+        $interiorProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($interiorProducts as $interiorProduct)
+        {
+            $return[] = array(
+                "id" => (int)$interiorProduct->getEntityId(),
+                "name" => $interiorProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $interiorProduct->getShortDescription(),
+                "image" => $urlPrepend . $interiorProduct->getSmallImage(),
+                "desc" => $interiorProduct->getDescription(),
+                "active" => ($interiorProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatdeckAction()
+    {
+        $deckProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, 'Deck')
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($deckProducts as $deckProduct)
+        {
+            $return[] = array(
+                "id" => (int)$deckProduct->getEntityId(),
+                "name" => $deckProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $deckProduct->getShortDescription(),
+                "image" => $urlPrepend . $deckProduct->getSmallImage(),
+                "desc" => $deckProduct->getDescription(),
+                "active" => ($deckProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatelectricalAction()
+    {
+        $electricalProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($electricalProducts as $electricalProduct)
+        {
+            $return[] = array(
+                "id" => (int)$electricalProduct->getEntityId(),
+                "name" => $electricalProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $electricalProduct->getShortDescription(),
+                "image" => $urlPrepend . $electricalProduct->getSmallImage(),
+                "desc" => $electricalProduct->getDescription(),
+                "active" => ($electricalProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatelflooringAction()
+    {
+        $flooringProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($flooringProducts as $flooringProduct)
+        {
+            $return[] = array(
+                "id" => (int)$flooringProduct->getEntityId(),
+                "name" => $flooringProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $flooringProduct->getShortDescription(),
+                "image" => $urlPrepend . $flooringProduct->getSmallImage(),
+                "desc" => $flooringProduct->getDescription(),
+                "active" => ($flooringProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatlookAction()
+    {
+        $boatLookProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, 'Look')
+            ->load()
+            ->getItems();
+
+        $return = array();
+
+        foreach($boatLookProducts as $boatLookProduct)
+        {
+            $return[] = array(
+                "id" => (int)$boatLookProduct->getEntityId(),
+                "name" => $boatLookProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $boatLookProduct->getShortDescription(),
+                "desc" => $boatLookProduct->getDescription(),
+                "active" => ($boatLookProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatelfuelAction()
+    {
+        $fuelProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($fuelProducts as $fuelProduct)
+        {
+            $return[] = array(
+                "id" => (int)$fuelProduct->getEntityId(),
+                "name" => $fuelProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $fuelProduct->getShortDescription(),
+                "image" => $urlPrepend . $fuelProduct->getSmallImage(),
+                "desc" => $fuelProduct->getDescription(),
+                "active" => ($fuelProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boateltrailerAction()
+    {
+        $trailerProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($trailerProducts as $trailerProduct)
+        {
+            $return[] = array(
+                "id" => (int)$trailerProduct->getEntityId(),
+                "name" => $trailerProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $trailerProduct->getShortDescription(),
+                "image" => $urlPrepend . $trailerProduct->getSmallImage(),
+                "desc" => $trailerProduct->getDescription(),
+                "active" => ($trailerProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatelseatsAction()
+    {
+        $seatProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($seatProducts as $seatProduct)
+        {
+            $return[] = array(
+                "id" => (int)$seatProduct->getEntityId(),
+                "name" => $seatProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $seatProduct->getShortDescription(),
+                "image" => $urlPrepend . $seatProduct->getSmallImage(),
+                "desc" => $seatProduct->getDescription(),
+                "active" => ($seatProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
+
+    public function boatelaccessoriesAction()
+    {
+        $accessoriesProducts = Mage::getModel('catalog/product')
+            ->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
+            ->load()
+            ->getItems();
+
+        $return = array();
+        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
+
+        foreach($accessoriesProducts as $accessoriesProduct)
+        {
+            $return[] = array(
+                "id" => (int)$accessoriesProduct->getEntityId(),
+                "name" => $accessoriesProduct->getName(),
+                "type" => "profile",
+                "shortDesc" => $accessoriesProduct->getShortDescription(),
+                "image" => $urlPrepend . $accessoriesProduct->getSmallImage(),
+                "desc" => $accessoriesProduct->getDescription(),
+                "active" => ($accessoriesProduct->getStatus() === "2" ? false : true)
+            );
+        }
+
+        echo Mage::helper('pb')->ConvertToJson($return);
+    }
 
 
     public function rulesAction()

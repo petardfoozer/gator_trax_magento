@@ -1,0 +1,19 @@
+<div class="container" ng-controller="DeckCtrl">
+    <div class="formContent left">
+        <div>
+            <select name="selectDeck" ng-model="deckType"
+                ng-options="item.name for item in deck_style.deck_types.styles">
+            </select>
+            <div id="tabs" class="tabs">
+                    <label ng-repeat="option in deckType.deck_options">
+                        <div class="group-box">
+                            <input type="radio" name="option.id" ng-model="deckType.deckOption" ng-value="option.id"/> {{option.name}}
+                        </div>
+                    </label>
+            </div>
+            <div class="description">
+                <button ng-click="section.SaveAndNext(deckType, $event)">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

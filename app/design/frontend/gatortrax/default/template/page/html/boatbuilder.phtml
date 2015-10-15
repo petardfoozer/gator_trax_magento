@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="wizard" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gator Trax - Boat Builder Wizard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Bevan|Open+Sans:400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+</head>
+<body ng-cloak class="ng-cloak">
+
+
+
+<div ng-controller="ScoreboardCtrl">
+    <button type="button" id="getStuff" onclick="getStuff()">Get Stuff</button>
+    <script type="text/javascript">
+        function getStuff()
+        {
+            jQuery.get("boatbuilder/ajax/boatlook", function(data){
+                console.log(data);
+            });
+        }
+    </script>
+</div>
+
+<div ui-view></div>
+
+<div ng-controller="BuilderCtrl">
+    <accordion>
+        <accordion-group heading="{{section.title}}" ng-repeat="section in sections" ng-click="LoadSection(section)" is-open="section.open">
+            <div ui-view="{{section.route}}"></div>
+        </accordion-group>
+    </accordion>
+</div>
+<div ng-controller="ButtonCtrl">
+    <button ng-click="saveForLater(section)">
+        Save for Later
+    </button>
+    <button ng-click="submitForQuote(section)">
+        Submit for Quote
+    </button>
+</div>
+</body>
+</html>

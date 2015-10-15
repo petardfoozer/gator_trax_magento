@@ -1,0 +1,15 @@
+<div class="container" ng-controller="AccessoriesCtrl">
+    <div id="tabs" class="tabs" ng-model="accessories">
+        <tabset>
+            <tab ng-repeat="item in accessories.products" heading="{{item.name}}" ng-model="item" active="item.active" disable="item.disabled">
+                <div class="non-scrollable-container">
+                    <div class="group-box" ng-repeat="option in item.product_options">
+                        <div class="left">
+                            <input type="radio" name="option" ng-model="option.id"  ng-value="option.id"/> {{option.name}}
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</div>

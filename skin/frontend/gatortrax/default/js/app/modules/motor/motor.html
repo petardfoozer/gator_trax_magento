@@ -1,0 +1,32 @@
+<div class="container" ng-controller="MotorCtrl">
+    <div class="left group-box">
+        <label for="motorType">Motor Types</label>
+        <select id="motorType" 
+                ng-options="item.name for item in motorData.motors.types track by item.id" 
+                ng-model="motorData.motors.list"
+                ng-change="LoadMotors()"></select>
+    </div>
+    <div class="left group-box">
+        <label for="steeringType">Steering Types</label>
+        <select id="steeringType" 
+                ng-options="item.name for item in motorData.steering.types track by item.id" 
+                ng-model="motorData.steering.selected"></select>
+    </div>
+    <div id="tabs" class="tabs">
+        <tabset>
+            <tab ng-repeat="tab in motorData.motors.list.brands" heading="{{tab.name}}" ng-model="motorData.motors.selected" active="tab.active" disable="tab.disabled">
+                <div class="non-scrollable-container">
+                    <div class="group-box" ng-repeat="motor in filteredMotors = (tab.motors | filter: {active: true})">
+                        <div class="left">
+                            <input type="radio" ng-model="motorData.motors.selected.model" name="motor" ng-value="motor"> {{motor.name}}
+                            <span class="inline-extra-elt" ng-if="motorData.motors.selected.model">
+                                <input type="checkbox" ng-model="item.checked" ng-true-value=1 ng-false-value=0>  x 2
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+    <button ng-click="SaveAndNext($event)">Next</button>
+</div>
