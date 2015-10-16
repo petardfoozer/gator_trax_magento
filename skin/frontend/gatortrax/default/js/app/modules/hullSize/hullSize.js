@@ -33,6 +33,7 @@ angular.module('wizard.hullSize', ['ui.router'])
     $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boathull')
     .success(function(data, status, headers)
     {
+        console.log(data);
         $scope.bottoms      = data.bottoms;
         $scope.rake         = data.rake;
         $scope.thickness    = data.thickness;
