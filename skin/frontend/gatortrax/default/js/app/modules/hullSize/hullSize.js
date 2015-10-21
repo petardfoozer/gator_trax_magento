@@ -47,7 +47,7 @@ angular.module('wizard.hullSize', ['ui.router'])
                 value: elt.value,
                 attributes: elt.attributes
             };
-                    // dynamically creating properties to support unknown attributes
+            // dynamically creating properties to support unknown attributes
             $scope.targetFields.forEach(function(target)
             {
                 item[target.name.toLowerCase()] = $filter('getByAttribute')(elt.attributes, 'name', target.name);

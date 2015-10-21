@@ -18,7 +18,8 @@ var app = angular.module('wizard',
     'wizard.fuelTank',
     'wizard.accessories',
     'wizard.trailer',
-    'wizard.seatsRacksBrackets'
+    'wizard.seatsRacksBrackets',
+    'wizard.saveForLater'
 ])
 .run(
   [          '$rootScope', '$state', '$stateParams',

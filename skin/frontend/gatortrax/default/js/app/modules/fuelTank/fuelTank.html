@@ -2,7 +2,7 @@
     <div class="formContent left">
         <label for="selectFuelTank"> Select your fuel tank: </label>
         <select name="selectFuelTank" ng-model="fuelTank.selectFuelTank">
-            <option ng-repeat="size in fuelTank" value="{{size}}">{{size}}</option>
+            <option ng-repeat="option in fuelTank" value="{{option.value}}">{{option.value}}</option>
         </select>
     </div>
     <div class="submitBtn">

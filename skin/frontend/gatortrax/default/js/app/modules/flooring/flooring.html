@@ -2,9 +2,10 @@
     <div class="formContent left">
         <label for="selectFlooring"> Select your Hydroturf flooring option: </label>
         <select name="selectFlooring" ng-model="flooring.selectFlooring">
-                <option ng-repeat="option in flooring.options" value="option.name" >{{option.name}}</option>
+                <option ng-repeat="option in flooring" value="option.Color" >{{option.Color}}</option>
         </select>
     </div>
+    {{flooring}}
     <div class="submitBtn">
         <button ng-click="section.SaveAndNext(flooring, $event)">Next</button>
     </div>

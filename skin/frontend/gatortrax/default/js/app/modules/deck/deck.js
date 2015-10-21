@@ -25,6 +25,7 @@ angular.module('wizard.deck', ['ui.router'])
     $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatdeck')
     .success(function(data, status, headers)
     {
+        console.log(data);
         $scope.deck_style = data;
         $rootScope.Scoreboard.ProcesstRules([$scope.deck_style], $scope.section);
 

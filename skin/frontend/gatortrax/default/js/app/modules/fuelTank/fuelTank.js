@@ -25,9 +25,7 @@ angular.module('wizard.fuelTank', ['ui.router'])
         $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatfuel')
             .success(function(data, status, headers)
             {
-                console.log(data);
                 $scope.fuelTank = data;
-
             })
             .error(function(data, status, headers, config)
             {

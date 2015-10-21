@@ -25,7 +25,6 @@ angular.module('wizard.look', ['ui.router'])
     $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatlook')
     .success(function(data, status, headers)
     {
-        console.log(data);
         $scope.looks = data;
     })
     .error(function(data, status, headers, config)

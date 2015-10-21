@@ -5,11 +5,12 @@
                 <div class="non-scrollable-container">
                     <div class="group-box" ng-repeat="option in item.product_options">
                         <div class="left">
-                            <input type="radio" name="option" ng-model="option.id"  ng-value="option.id"/> {{option.name}}
+                            <input type="radio" name="option" ng-model="option.id"  ng-value="option.id"/> {{option}
                         </div>
                     </div>
                 </div>
             </tab>
         </tabset>
     </div>
+    {{accessories}}
 </div>

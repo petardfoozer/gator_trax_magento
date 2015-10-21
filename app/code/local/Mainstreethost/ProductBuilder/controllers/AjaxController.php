@@ -16,6 +16,7 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         $post = $this->getRequest()->getParams();
         Mage::helper('pb/Cart')->ClearCart();
     }
+
     public function boatmodelsAction()
     {
         $modelAttr = Mage::getModel('eav/entity_attribute')->load(
@@ -52,197 +53,120 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
     
     public function boathullAction()
     {
-        $hullProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = 'Hull';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
-
-        foreach($hullProducts as $hullProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$hullProduct->getEntityId(),
-                "name" => $hullProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $hullProduct->getShortDescription(),
-                "image" => $urlPrepend . $hullProduct->getSmallImage(),
-                "desc" => $hullProduct->getDescription(),
-                "active" => ($hullProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatmotorAction()
     {
-
-        $motorProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = 'Motor';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
 
-        foreach($motorProducts as $motorProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$motorProduct->getEntityId(),
-                "name" => $motorProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $motorProduct->getShortDescription(),
-                "image" => $urlPrepend . $motorProduct->getSmallImage(),
-                "desc" => $motorProduct->getDescription(),
-                "active" => ($motorProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatinteriorAction()
     {
-        $interiorProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = 'Interior';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
 
-        foreach($interiorProducts as $interiorProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$interiorProduct->getEntityId(),
-                "name" => $interiorProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $interiorProduct->getShortDescription(),
-                "image" => $urlPrepend . $interiorProduct->getSmallImage(),
-                "desc" => $interiorProduct->getDescription(),
-                "active" => ($interiorProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatdeckAction()
     {
-        $deckProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, 'Deck')
-            ->load()
-            ->getItems();
-
+        $boatPart = 'Deck';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
 
-        foreach($deckProducts as $deckProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$deckProduct->getEntityId(),
-                "name" => $deckProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $deckProduct->getShortDescription(),
-                "image" => $urlPrepend . $deckProduct->getSmallImage(),
-                "desc" => $deckProduct->getDescription(),
-                "active" => ($deckProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
-    public function boatectricalAction()
+    public function boatelectricalAction()
     {
-        $electricalProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = "Electrical";
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
 
-        foreach($electricalProducts as $electricalProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$electricalProduct->getEntityId(),
-                "name" => $electricalProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $electricalProduct->getShortDescription(),
-                "image" => $urlPrepend . $electricalProduct->getSmallImage(),
-                "desc" => $electricalProduct->getDescription(),
-                "active" => ($electricalProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatflooringAction()
     {
-        $flooringProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = 'Flooring';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
 
-        foreach($flooringProducts as $flooringProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$flooringProduct->getEntityId(),
-                "name" => $flooringProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $flooringProduct->getShortDescription(),
-                "image" => $urlPrepend . $flooringProduct->getSmallImage(),
-                "desc" => $flooringProduct->getDescription(),
-                "active" => ($flooringProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatlookAction()
     {
-        $attributeCode = $this->getLookByAttribute(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE);
-
+        $boatPart = 'Look';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
+        $return = array();
         if($attributeCode)
         {
-            $boatLookProducts = Mage::getModel('catalog/product')
-                ->getCollection()
-                ->addAttributeToSelect('*')
-                ->addAttributeToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('eq' => $attributeCode));
-
-            $return = array();
-            foreach($boatLookProducts as $boatLookProduct)
-            {
-                $lookOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatLookProduct);
-                foreach ($lookOptions as $lookOption) {
-                    if ($lookOption->getType() === 'drop_down') {
-                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($lookOption);
-                        foreach ($values as $value) {
-                            $return[] = array("color", array("name" => $value->getTitle()));
-                        }
-                    }
-                }
-            }
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
             echo Mage::helper('pb')->ConvertToJson($return);
         }
         else
@@ -252,32 +176,15 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
 
     }
 
-
     public function boatfuelAction()
     {
-        $attributeCode = $this->getFuelByAttribute(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE);
-
-        Mage::log($attributeCode);
+        $boatPart = 'Fuel Tank';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
+        $return = array();
         if($attributeCode)
         {
-            $boatFuelProducts = Mage::getModel('catalog/product')
-                ->getCollection()
-                ->addAttributeToSelect('*')
-                ->addAttributeToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('eq' => $attributeCode));
-
-            $return = array();
-            foreach($boatFuelProducts as $boatFuelProduct)
-            {
-                $fuelOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatFuelProduct);
-                foreach ($fuelOptions as $fuelOption) {
-                    if ($fuelOption->getType() === 'drop_down') {
-                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($fuelOption);
-                        foreach ($values as $value) {
-                            $return[] = array("tank size", array("size" => $value->getTitle()));
-                        }
-                    }
-                }
-            }
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
             echo Mage::helper('pb')->ConvertToJson($return);
         }
         else
@@ -288,86 +195,54 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
 
     public function boattrailerAction()
     {
-        $trailerProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
 
+        $boatPart = 'Trailer';
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
-
-        foreach($trailerProducts as $trailerProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$trailerProduct->getEntityId(),
-                "name" => $trailerProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $trailerProduct->getShortDescription(),
-                "image" => $urlPrepend . $trailerProduct->getSmallImage(),
-                "desc" => $trailerProduct->getDescription(),
-                "active" => ($trailerProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boatseatsAction()
     {
-        $seatProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = "Seats";
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
-
-        foreach($seatProducts as $seatProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$seatProduct->getEntityId(),
-                "name" => $seatProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $seatProduct->getShortDescription(),
-                "image" => $urlPrepend . $seatProduct->getSmallImage(),
-                "desc" => $seatProduct->getDescription(),
-                "active" => ($seatProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
     public function boataccessoriesAction()
     {
-        $accessoriesProducts = Mage::getModel('catalog/product')
-            ->getCollection()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, array('like' => '%%'))
-            ->load()
-            ->getItems();
-
+        $boatPart = "Accessories";
+        $attributeCode = Mage::helper('pb/Actions')->getAttributeCode(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $boatPart);
         $return = array();
-        $urlPrepend = Mage::getBaseUrl('media') . 'catalog/product';
-
-        foreach($accessoriesProducts as $accessoriesProduct)
+        if($attributeCode)
         {
-            $return[] = array(
-                "id" => (int)$accessoriesProduct->getEntityId(),
-                "name" => $accessoriesProduct->getName(),
-                "type" => "profile",
-                "shortDesc" => $accessoriesProduct->getShortDescription(),
-                "image" => $urlPrepend . $accessoriesProduct->getSmallImage(),
-                "desc" => $accessoriesProduct->getDescription(),
-                "active" => ($accessoriesProduct->getStatus() === "2" ? false : true)
-            );
+            $boatPartProductCollection = Mage::helper('pb/Actions')->getBoatPartProductCollection(Mainstreethost_ProductBuilder_AjaxController::BOAT_ATTRIBUTE, $attributeCode);
+            $return = Mage::helper('pb/Actions')->getCustomOptionsCollection($boatPartProductCollection, $boatPart);
+            echo Mage::helper('pb')->ConvertToJson($return);
         }
-
-        echo Mage::helper('pb')->ConvertToJson($return);
+        else
+        {
+            echo "error loading product options";
+        }
     }
 
 
@@ -513,165 +388,5 @@ class Mainstreethost_ProductBuilder_AjaxController extends Mage_Core_Controller_
         );
 
         echo Mage::helper('pb')->ConvertToJson($return);
-    }
-
-    public function getMotorByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Motor'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getInteriorByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Interior'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getDeckByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Deck'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getElectricalByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Electrical'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getFlooringByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Flooring'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getLookByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Look'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getFuelByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Fuel Tank'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getTrailerByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Trailer'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getSeatsByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Seats'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
-    }
-
-    public function getAccessoriesByAttribute($attributeCode)
-    {
-        $attributeDetails = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attributeCode);
-        $options = $attributeDetails->getSource()->getAllOptions(false);
-        $selectedOptionId = false;
-
-        foreach($options as $option)
-        {
-            if($option['label'] == 'Accessories'):
-                $selectedOptionId = $option['value'];
-            endif;
-        }
-
-        return $selectedOptionId;
     }
 }
