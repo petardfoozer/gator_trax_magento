@@ -2,7 +2,7 @@
     <div class="formContent left">
         <label for="selectColor"> Select your color: </label>
         <select name="selectColor" ng-model="looks">
-            <option ng-repeat="option in looks" value="{{option.value}}">{{option.value}}</option>
+            <option ng-repeat="option in looks track by option.id" value="{{option.id}}">{{option.name}}</option>
         </select>
     </div>
         <div class="submitBtn">

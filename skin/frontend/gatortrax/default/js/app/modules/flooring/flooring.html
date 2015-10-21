@@ -1,11 +1,10 @@
 <div class="container" ng-controller="FlooringCtrl">
     <div class="formContent left">
         <label for="selectFlooring"> Select your Hydroturf flooring option: </label>
-        <select name="selectFlooring" ng-model="flooring.selectFlooring">
-                <option ng-repeat="option in flooring" value="option.Color" >{{option.Color}}</option>
+        <select name="selectFlooring" ng-model="flooring">
+                <option ng-repeat="option in flooring track by option.type" value="option.id" >{{option.name}}</option>
         </select>
     </div>
-    {{flooring}}
     <div class="submitBtn">
         <button ng-click="section.SaveAndNext(flooring, $event)">Next</button>
     </div>

@@ -16,15 +16,7 @@
 
 
 <div ng-controller="ScoreboardCtrl">
-    <button type="button" id="getStuff" onclick="getStuff()">Get Stuff</button>
-    <script type="text/javascript">
-        function getStuff()
-        {
-            jQuery.get("boatbuilder/ajax/boatlook", function(data){
-                console.log(data);
-            });
-        }
-    </script>
+   
 </div>
 
 <div ui-view></div>

@@ -1,12 +1,11 @@
 <div class="container" ng-controller="TrailerCtrl">
     <div class="formContent left">
         <label for="selectTrailer"> Select your trailer: </label>
-            <select name="selectTrailer" ng-model="trailer.selectTrailer">
-                <option ng-repeat="option in trailer" value="{{option.size}}">{{option.size}}</option>
+            <select name="selectTrailer" ng-model="trailer">
+                <option ng-repeat="option in trailer track by option.type" value="{{option.id}}">{{option.name}}</option>
             </select>
-        <div class="submitBtn">
-            <button ng-click="section.SaveAndNext(trailer, $event)">Next</button>
-        </div>
-        {{trailer}}
+    </div>
+    <div class="submitBtn">
+        <button ng-click="section.SaveAndNext(trailer, $event)">Next</button>
     </div>
 </div>

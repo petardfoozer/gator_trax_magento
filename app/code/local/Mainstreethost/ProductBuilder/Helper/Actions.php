@@ -34,27 +34,175 @@ class Mainstreethost_ProductBuilder_Helper_Actions extends Mage_Core_Helper_Abst
     public function getCustomOptionsCollection($boatPartProductCollection, $boatPart)
     {
         $return = array();
+        $valuesArray = array();
+        $mergeArray = array();
         try {
-            foreach ($boatPartProductCollection as $boatPartProduct) {
-                $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
-                foreach ($partOptions as $partOption) {
-                    $optionTitle = $partOption->getDefaultTitle();
-                    if ($partOption->getType() === 'drop_down') {
+            if($boatPart === 'Electrical') {
+                foreach ($boatPartProductCollection as $boatPartProduct) {
+                    $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+                    foreach ($partOptions as $partOption) {
+                        $optionTitle = $partOption->getDefaultTitle();
                         $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
+
+                        // Array formatting for Electrical Products
                         foreach ($values as $value) {
-                            if($boatPart === 'Fuel Tank' || 'Look')
-                            {
-                                $return[] = array("value" => $value->getTitle());
-                            }
-                            else
-                            {
-                                $return[] = array(array("title" => $optionTitle, "value" => $value->getTitle()));
-                            }
+                            $valuesArray[] = array("product_options" => array(
+                                "name" => $value->getTitle(),
+                                "type" => $value->getId(),
+                                "id" => $value->getId(),
+                                "rules" => [],
+                                "active" => true,
+                            )
+
+                            );
                         }
                     }
                 }
+                foreach ($boatPartProductCollection as $boatPartProduct) {
+                    $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+                    foreach ($partOptions as $partOption) {
+                        $optionTitle = $partOption->getDefaultTitle();
+                        $return[] = array(
+                        "name" => "electrical_products",
+                        "id" => 1,
+                        "type" => 1,
+                        "products" => array(
+                            "id" => 1,
+                            "name" => "Accessories",
+                            "products" => array(
+                                "type" => 1,
+                                "name" => $optionTitle,
+                                "id" => 1,
+                                "product_options" => (
+                                $valuesArray
+                                )
+                            )
+                        )
+                    );
+                    }
+                }
+                return $return;
             }
-            return $return;
+//                if ($boatPart === 'Electrical') {
+//                    $return = array(
+//                        "name" => "electrical_products",
+//                        "id" => 1,
+//                        "type" => 1,
+//                        "products" => array(
+//                            "id" => 1,
+//                            "name" => "Accessories",
+//                            "products" => array(
+//                                "type" => 1,
+//                                "name" => $optionTitle,
+//                                "id" => 1,
+//                                "product_options" => (
+//                                $valuesArray
+//                                )
+//                            )
+//                        )
+//                    );
+//                }
+//            foreach ($boatPartProductCollection as $boatPartProduct) {
+//                $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+//                foreach ($partOptions as $partOption) {
+//                    if ($partOption->getType() === 'drop_down') {
+//                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
+//
+//                        foreach ($values as $value) {
+//                            $mergeArray[] = array("product_options" => array(
+//                                "name" => $value->getTitle(),
+//                                "type" => $value->getId(),
+//                                "id" => $value->getId(),
+//                                "rules" => [],
+//                                "active" => true,
+//                            )
+//
+//                            );
+//                        }
+//                    }
+//                }
+//            }
+
+            // Array formatting for Boat Look, Fuel Tank, Trailer, Flooring
+
+            if($boatPart === 'Look' || $boatPart === 'Fuel Tank' || $boatPart === 'Trailer' || $boatPart === 'Flooring') {
+                foreach($boatPartProductCollection as $boatPartProduct){
+                    $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+                    foreach ($partOptions as $partOption) {
+                        $optionTitle = $partOption->getDefaultTitle();
+                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
+
+                        foreach ($values as $value) {
+                            $valuesArray[] = array(
+                                "name" => $value->getTitle(),
+                                "type" => $value->getId(),
+                                "id" => $value->getId(),
+                                "rules" => [],
+                                "active" => true,
+                            );
+                        }
+                    }
+                }
+                return $valuesArray;
+            }
+
+
+                        //Array Formatting for Interior
+
+//                      if($boatPart === 'Interior')
+//                      {
+//                                $return[] = array(
+//                                    "name"      => "boat_interior_positions",
+//                                    "id"        => $value->getId(),
+//                                    "type"      => $value->getId(),
+//                                    "positions" => array(
+//                                        "name"  => "positions",
+//                                        "id"    => $value->getId(),
+//                                        "type"  => array(
+//                                            "name"              => "port",
+//                                            "alternative_name"  => "left",
+//                                            "type"              => $value->getId(),
+//                                            "id"                => $value->getId(),
+//                                            "boxes"             => array(
+//                                                "id"            => $value->getId(),
+//                                                "type"          => $value->getId(),
+//                                                "name"          => $value->getTitle(),
+//                                                "rules"         => [],
+//                                                "active"        => true
+//                                            ),
+//                                            array(
+//                                                "name"              => "center",
+//                                                "alternative_name"  => "middle",
+//                                                "type"              => $value->getId(),
+//                                                "id"                => $value->getId(),
+//                                                "boxes"             => array(
+//                                                    "id"            => $value->getId(),
+//                                                    "type"          => $value->getId(),
+//                                                    "name"          => $value->getTitle(),
+//                                                    "rules"         => [],
+//                                                    "active"        => true
+//
+//                                                )
+//                                            ),
+//                                            array(
+//                                                "name"              => "starboard",
+//                                                "alternative_name"  => "right",
+//                                                "type"              => $value->getId(),
+//                                                "id"                => $value->getId(),
+//                                                "boxes"             => array(
+//                                                    "id"            => $value->getId(),
+//                                                    "type"          => $value->getId(),
+//                                                    "name"          => $value->getTitle(),
+//                                                    "rules"         => [],
+//                                                    "active"        => true
+//                                                )
+//                                            )
+//                                        )
+//                                    )
+//                                );
+//                            }
+//
+
         } catch(Exception $e){
             return $e->getMessage();
         }

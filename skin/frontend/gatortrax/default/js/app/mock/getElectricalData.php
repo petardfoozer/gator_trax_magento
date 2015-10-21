@@ -5,11 +5,12 @@ $electrical =
    "name"      => "electrical_products",
    "id"       => 10,
    "type"     => 100,
-   "products"  =>[
+   "products"  =>
+       [
        "id"     => 100,
        "name"   => "Accessories",
        "products"=>
-   [
+       [
             [
                 "type"  => 100,
                 "name"  => "LED Spotlight Kit",
