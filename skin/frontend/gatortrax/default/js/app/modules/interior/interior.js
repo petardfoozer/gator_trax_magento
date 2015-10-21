@@ -27,6 +27,7 @@ angular.module('wizard.interior', ['ui.router'])
     $http.get(Config.ajaxDefaultPath + 'boatbuilder/ajax/boatinterior')
     .success(function(data, status, headers)
     {
+        console.log(data);
         $scope.data = data;
         $scope.interior = data;
         $scope.positions = data.positions;

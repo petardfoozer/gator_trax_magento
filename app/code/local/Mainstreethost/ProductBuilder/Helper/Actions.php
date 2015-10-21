@@ -35,13 +35,11 @@ class Mainstreethost_ProductBuilder_Helper_Actions extends Mage_Core_Helper_Abst
     {
         $return = array();
         $valuesArray = array();
-        $mergeArray = array();
         try {
             if($boatPart === 'Electrical') {
                 foreach ($boatPartProductCollection as $boatPartProduct) {
                     $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
                     foreach ($partOptions as $partOption) {
-                        $optionTitle = $partOption->getDefaultTitle();
                         $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
 
                         // Array formatting for Electrical Products
@@ -139,6 +137,54 @@ class Mainstreethost_ProductBuilder_Helper_Actions extends Mage_Core_Helper_Abst
                                 "id" => $value->getId(),
                                 "rules" => [],
                                 "active" => true,
+                            );
+                        }
+                    }
+                }
+                return $valuesArray;
+            }
+
+            if($boatPart === 'Interior')
+            {
+                foreach($boatPartProductCollection as $boatPartProduct)                {
+                    $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+                    foreach($partOptions as $partOption)
+                    {
+                        $optionTitle = $partOption->getDefaultTitle();
+                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
+
+                        foreach($values as $value)
+                        {
+                            $valuesArray[] = array(
+                                "id"    => $value->getId(),
+                                "type"  => $value->getId(),
+                                "name"  => $value->getTitle(),
+                                "rules" => [],
+                                "active"=> true
+                            );
+                        }
+                    }
+                }
+                return $valuesArray;
+            }
+
+            if($boatPart === 'Deck')
+            {
+                foreach($boatPartProductCollection as $boatPartProduct)                {
+                    $partOptions = Mage::getModel('catalog/product_option')->getProductOptionCollection($boatPartProduct);
+                    foreach($partOptions as $partOption)
+                    {
+                        $optionTitle = $partOption->getDefaultTitle();
+                        $values = Mage::getSingleton('catalog/product_option_value')->getValuesCollection($partOption);
+
+                        foreach($values as $value)
+                        {
+                            $valuesArray[] = array(
+                                "id"    => $value->getId(),
+                                "type"  => $value->getId(),
+                                "name"  => $value->getTitle(),
+                                "rules" => [],
+                                "active"=> true
                             );
                         }
                     }
